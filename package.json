@@ -1,0 +1,46 @@
+{
+  "name": "givies-framework",
+  "version": "0.1.0",
+  "description": "A framework to facilitate the development of a Discord bot",
+  "main": "index.js",
+  "engines": {
+    "node": ">=16.6.0"
+  },
+  "files": [
+    "lib/**/*"
+  ],
+  "scripts": {
+    "lint": "eslint -c .eslintrc.yml lib && echo \"\u001b[1m\u001b[32mSUCCESS\u001b[39m\u001b[22m\" || echo \"\u001b[1m\u001b[31mFAILED\u001b[39m\u001b[22m\"",
+    "lint:fix": "eslint -c .eslintrc.yml lib --fix && echo \"\u001b[1m\u001b[32mSUCCESS\u001b[39m\u001b[22m\" || echo \"\u001b[1m\u001b[31mFAILED\u001b[39m\u001b[22m\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NotMarx/givies-framework.git"
+  },
+  "keywords": [
+    "givies",
+    "framework",
+    "typescript",
+    "eris"
+  ],
+  "author": "reinhardt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/NotMarx/givies-framework/issues"
+  },
+  "homepage": "https://github.com/NotMarx/givies-framework#readme",
+  "devDependencies": {
+    "@types/node": "^17.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.7.0",
+    "@typescript-eslint/parser": "^5.7.0",
+    "eslint": "^8.4.1",
+    "eslint-plugin-sort-class-members": "^1.14.1",
+    "tslib": "^2.3.1",
+    "typescript": "^4.5.4"
+  },
+  "dependencies": {
+    "deepmerge": "^4.2.2",
+    "eris": "^0.16.1",
+    "serialize-javascript": "^6.0.0"
+  }
+}
