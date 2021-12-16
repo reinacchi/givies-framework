@@ -208,5 +208,5 @@ export const GiveawayStartOptions: GiveawayStartOptions = {
   prize: "",
   winnerCount: 0
 };
-export const GiveawayEditOptions = {};
+export const GiveawayEditOptions: GiveawayEditOptions = {};
 export const BonusEntry: BonusEntry[] = [];
