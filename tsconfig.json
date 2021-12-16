@@ -1,0 +1,18 @@
+{
+	"compilerOptions": {
+		"lib": ["ES2021", "ESNext"],
+		"module": "commonjs",
+		"moduleResolution": "Node",
+		"target": "ESNext",
+		"sourceMap": true,
+		"esModuleInterop": true,
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"allowSyntheticDefaultImports": true,
+		"skipLibCheck": true,
+		"skipDefaultLibCheck": true,
+		"resolveJsonModule": true,
+		"importHelpers": true
+	},
+    "include": ["lib"]
+}
