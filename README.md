@@ -6,6 +6,8 @@ A framework to facilitate the development of a Discord bot called **Givies**.
 
 ## Developing a Discord bot using Givies-Framework
 
+- **Requirement:** You will need **[NodeJS v16.6.0+](https://nodejs.org)**.
+
 If you wanted to **develop a Discord bot** using this framework, you need to get familiar with the [Eris](https://github.com/abalabahaha/eris) Discord API library. The contents of the framework are included as:
 
 - Giveaways
