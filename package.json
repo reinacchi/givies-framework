@@ -10,6 +10,7 @@
     "lib/**/*"
   ],
   "scripts": {
+    "build": "tsc",
     "lint": "eslint -c .eslintrc.yml lib && echo \"\u001b[1m\u001b[32mSUCCESS\u001b[39m\u001b[22m\" || echo \"\u001b[1m\u001b[31mFAILED\u001b[39m\u001b[22m\"",
     "lint:fix": "eslint -c .eslintrc.yml lib --fix && echo \"\u001b[1m\u001b[32mSUCCESS\u001b[39m\u001b[22m\" || echo \"\u001b[1m\u001b[31mFAILED\u001b[39m\u001b[22m\""
   },
