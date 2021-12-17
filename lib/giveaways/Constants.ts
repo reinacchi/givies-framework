@@ -26,7 +26,7 @@ export interface GiveawayStartOptions {
   duration?: number; // can be null for drops
   hostedBy?: User;
   botsCanWin?: boolean;
-  exemptPermissions?: Constants["Permissions"][];
+  exemptPermissions?: [keyof Constants["Permissions"]];
   exemptMembers?: (member: Member) => boolean | Promise<boolean>;
   bonusEntries?: BonusEntry[];
   embedColor?: number;
@@ -68,7 +68,7 @@ export interface GiveawaysManagerOptions {
   endedGiveawaysLifetime?: number;
   default?: {
     botsCanWin?: boolean;
-    exemptPermissions?: Constants["Permissions"][];
+    exemptPermissions?: [keyof Constants["Permissions"]];
     exemptMembers?: (member: Member) => boolean | Promise<boolean>;
     embedColor?: number;
     embedColorEnd?: number;
@@ -109,7 +109,7 @@ export interface GiveawayData {
   winnerIDs?: string[];
   messageID?: string;
   reaction?: any;
-  exemptPermissions?: Constants["Permissions"][];
+  exemptPermissions?: [keyof Constants["Permissions"]];
   exemptMembers?: string;
   bonusEntries?: string;
   embedColor?: number;
