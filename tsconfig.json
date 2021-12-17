@@ -3,6 +3,7 @@
 		"lib": ["ES2021", "ESNext"],
 		"module": "commonjs",
 		"moduleResolution": "Node",
+		"outDir": "./lib",
 		"target": "ESNext",
 		"sourceMap": true,
 		"esModuleInterop": true,
@@ -14,5 +15,6 @@
 		"resolveJsonModule": true,
 		"importHelpers": true
 	},
-    "include": ["lib"]
+    "include": ["lib"],
+	"exclude": ["node_modules"]
 }
