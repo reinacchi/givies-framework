@@ -74,6 +74,22 @@ export class RichEmbed {
     return this;
   }
 
+  normalizeField(name: string, value: string, inline = false) {
+    return {
+      name: Util.verifyString(name, RangeError, 'EMBED_FIELD_NAME', false),
+      value: Util.verifyString(value, RangeError, 'EMBED_FIELD_VALUE', false),
+      inline,
+    };
+  }
+
+  normalizeFields(...fields) {
+    return fields
+      .flat(2)
+      .map(field =>
+        this.normalizeField(field.name, field.value, typeof field.inline === 'boolean' ? field.inline : false),
+      );
+  }
+
   setAuthor(name: string, url?: string, iconURL?: string) {
     if (typeof name !== "string")
       throw new TypeError(
@@ -210,22 +226,10 @@ export class RichEmbed {
   }
 
   spliceFields(index: number, deleteCount: number, ...fields: any) {
-      this.fields.splice(index, deleteCount, ...this.normalizeFields(...fields));
+    this.fields.splice(index, deleteCount, ...this.normalizeFields(...fields));
   }
 
-  normalizeField(name: string, value: string, inline = false) {
-    return {
-      name: Util.verifyString(name, RangeError, 'EMBED_FIELD_NAME', false),
-      value: Util.verifyString(value, RangeError, 'EMBED_FIELD_VALUE', false),
-      inline,
-    };
-  }
+  
 
-  normalizeFields(...fields) {
-    return fields
-      .flat(2)
-      .map(field =>
-        this.normalizeField(field.name, field.value, typeof field.inline === 'boolean' ? field.inline : false),
-      );
-  }
+  
 }
