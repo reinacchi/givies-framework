@@ -10,10 +10,7 @@ import {
 import { EventEmitter } from "events";
 import {
   Endpoints,
-  GiveawayEditOptions,
   GiveawayData,
-  GiveawayMessages,
-  GiveawayRerollOptions,
   LastChanceOptions,
   BonusEntry,
   PauseOptions,
@@ -94,7 +91,7 @@ export class Giveaway extends EventEmitter {
   }
 
   get channel(): TextChannel {
-      return this.client.getChannel(this.channelID) as TextChannel;
+    return this.client.getChannel(this.channelID) as TextChannel;
   }
 
   get data(): GiveawayData {
@@ -173,7 +170,7 @@ export class Giveaway extends EventEmitter {
     );
   }
 
-  get messageURL() {
+  get messageURL(): string {
     return Endpoints.MESSAGE_URL(this.guildID, this.channelID, this.messageID);
   }
 
@@ -199,6 +196,7 @@ export class Giveaway extends EventEmitter {
         if (typeof obj.bonus === "function") {
           try {
             const result = await obj.bonus(member);
+
             if (Number.isInteger(result) && result > 0) {
               if (obj.cumulative) {
                 cumulativeEntries.push(result);
@@ -214,15 +212,15 @@ export class Giveaway extends EventEmitter {
     }
   }
 
-  async checkWinnerEntry(user: User) {
-      if (this.winnerIDs.includes(user.id)) return false;
-      const member: Member = this.channel.guild.members.get(user.id) || (await this.channel.guild.fetchMembers({ userIDs: [user.id] }).catch(() => {}))[0];
-      if (!member) return false;
-      const exemptMember = await this.exemptMembers(member);
-      if (exemptMember) return false;
-      const hasPermission = this.exemptPermissions.some((permission) => member.permissions.has((permission)));
-      if (hasPermission) return false;
-      return true;
+  async checkWinnerEntry(user: User): Promise<boolean> {
+    if (this.winnerIDs.includes(user.id)) return false;
+    const member: Member = this.channel.guild.members.get(user.id) || (await this.channel.guild.fetchMembers({ userIDs: [user.id] }).catch(() => {}))[0];
+    if (!member) return false;
+    const exemptMember = await this.exemptMembers(member);
+    if (exemptMember) return false;
+    const hasPermission = this.exemptPermissions.some((permission) => member.permissions.has((permission)));
+    if (hasPermission) return false;
+    return true;
   }
 
   ensureEndTimeout(): NodeJS.Timeout {
@@ -256,17 +254,19 @@ export class Giveaway extends EventEmitter {
   }
 
   async fetchMessage(): Promise<Message> {
-      return new Promise(async (resolve, reject) => {
-        if (!this.messageID) return;
-        const message = this.channel.messages.get(this.messageID) || (await this.channel.getMessage(this.messageID).catch(() => {}));
-        if (!message) {
-            this.manager.giveaways = this.manager.giveaways.filter((g) => g.messageID !== this.messageID);
-            await this.manager.deleteGiveaway(this.messageID);
-            return reject(`Unable to fetch Message ID: ${this.messageID}`);
-        }
-        this.message = message;
-        resolve(message);
-      });
+    return new Promise(async (resolve, reject) => {
+      if (!this.messageID) return;
+      const message = this.channel.messages.get(this.messageID) || (await this.channel.getMessage(this.messageID).catch(() => {}));
+
+      if (!message) {
+        this.manager.giveaways = this.manager.giveaways.filter((g) => g.messageID !== this.messageID);
+        await this.manager.deleteGiveaway(this.messageID);
+        return reject(`Unable to fetch Message ID: ${this.messageID}`);
+      }
+
+      this.message = message;
+      resolve(message);
+    });
   }
 
   fillInEmbed(embed: RichEmbed): RichEmbed | null {
@@ -277,9 +277,9 @@ export class Giveaway extends EventEmitter {
     if (typeof embed.author?.name === "string") embed.author.name = this.fillInString(embed.author.name);
     if (typeof embed.footer?.text === 'string') embed.footer.text = this.fillInString(embed.footer.text);
     embed.spliceFields(0, embed.fields.length, embed.fields.map((field) => {
-        field.name = this.fillInString(field.name);
-        field.value = this.fillInString(field.value);
-        return field;
+      field.name = this.fillInString(field.name);
+      field.value = this.fillInString(field.value);
+      return field;
     }));
     return embed;
   }
