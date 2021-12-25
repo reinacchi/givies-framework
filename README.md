@@ -16,10 +16,10 @@ If you wanted to **develop a Discord bot** using this framework, you need to get
 
 ## Contributing
 
-Any contributions can be made via [pull requests](https://github.com/NotMarx/givies-framework/pulls).
+Any contributions can be made via [pull requests](https://github.com/reinhello/givies-framework/pulls).
 
-If you're confused where to get started, the [issue-tracker](https://github.com/NotMarx/givies-framework/issues) is the best place to track any current existing issues.
+If you're confused where to get started, the [issue-tracker](https://github.com/reinhello/givies-framework/issues) is the best place to track any current existing issues.
 
 ## License
 
-This framework is released under the [MIT License](https://github.com/NotMarx/givies-framework/blob/master/LICENSE).
+This framework is released under the [MIT License](https://github.com/reinhello/givies-framework/blob/master/LICENSE).
