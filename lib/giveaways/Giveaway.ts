@@ -16,7 +16,8 @@ import {
   PauseOptions,
   GiveawaysMessages,
 } from "./Constants";
-import { RichEmbed } from "../util";
+import { GiveawaysManager } from "./GiveawayManager";
+import { RichEmbed, Util } from "../util";
 import merge from "deepmerge";
 import serialize from "serialize-javascript";
 
@@ -57,7 +58,7 @@ export class Giveaway extends EventEmitter {
 
   winnerIDs: string[];
 
-  constructor(manager: any, options: GiveawayData) {
+  constructor(manager: GiveawaysManager, options: GiveawayData) {
     super();
 
     this.client = manager.client;
@@ -186,16 +187,18 @@ export class Giveaway extends EventEmitter {
     return this.endAt - Date.now();
   }
 
-  async checkBonusEntries(user: User): Promise<void> {
+  async checkBonusEntries(user: User): Promise<number> {
     const member: Member = this.channel.guild.members.get(user.id) || (await this.channel.guild.fetchMembers({ userIDs: [user.id] }).catch(() => {}))[0];
-    const entries: number[] = [];
+    const entries: number[] = [0];
     const cumulativeEntries: number[] = [];
+
+    if (!member) return 0;
 
     if (this.bonusEntries.length) {
       for (const obj of this.bonusEntries) {
         if (typeof obj.bonus === "function") {
           try {
-            const result = await obj.bonus(member);
+            const result = await obj.bonus.apply(this, [member]);
 
             if (Number.isInteger(result) && result > 0) {
               if (obj.cumulative) {
@@ -209,6 +212,10 @@ export class Giveaway extends EventEmitter {
           }
         }
       }
+    }
+    if (cumulativeEntries.length) {
+      entries.push(cumulativeEntries.reduce((a, b) => a + b));
+      return Math.max(...entries);
     }
   }
 
@@ -298,5 +305,81 @@ export class Giveaway extends EventEmitter {
       text = text.replaceAll(match, replacer);
     });
     return text;
+  }
+
+  async roll(winnerCount = this.winnerCount): Promise<Member[]> {
+    if (!this.message) return [];
+
+    const reactionUsers = await this.message.getReaction(this.reaction);
+  
+    if (!reactionUsers.length) return [];
+
+    try {
+      this.channel.guild.fetchMembers();
+    } catch (err) {
+      
+    }
+
+    let userCollection = reactionUsers;
+
+    while (userCollection.length % 100 === 0) {
+      const newUsers = await this.message.getReaction(this.reaction, { after: (userCollection[userCollection.length - 1] as any) });
+
+      if (newUsers.length === 0) break;
+      
+      userCollection = userCollection.concat(newUsers);
+    }
+
+    const users = userCollection.filter((u) => !u.bot || u.bot === this.botsCanWin).filter((u) => u.id !== this.client.user.id);
+
+    if (!users.length) return [];
+
+    let userArray: User[];
+
+    if (this.bonusEntries.length) {
+      userArray = users;
+
+      for (const user of userArray.slice()) {
+        const isUserValidEntry = await this.checkWinnerEntry(user);
+
+        if (!isUserValidEntry) continue;
+
+        const highestBonusEntries = await this.checkBonusEntries(user);
+        if (!highestBonusEntries) continue;
+
+        for (let i = 0; i < highestBonusEntries; i++) userArray.push(user);
+      }
+    }
+
+    let rolledWinners: User[];
+
+    userArray = userArray?.length > users.length ? userArray : users;
+    rolledWinners = Array.from({
+      length: Math.min(winnerCount, users.length)
+    }, () => userArray.splice(Math.floor(Math.random() * userArray.length), 1)[0]);
+
+    const winners: User[] = [];
+
+    for (const u of rolledWinners) {
+      const isValidEntry = !winners.some((winner) => winner.id === u.id) && (await this.checkWinnerEntry(u));
+
+      if (isValidEntry) {
+        winners.push(u);
+      } else {
+        for (const user of userArray || users) {
+          const isUserValidEntry = !winners.some((winner) => winner.id === user.id) && (await this.checkWinnerEntry(user));
+
+          if (isUserValidEntry) {
+            winners.push(user);
+            break;
+          }
+        }
+      }
+    }
+    return Promise.all(
+      winners.map(async (user) =>
+          this.channel.guild.members.get(user.id) || (await this.channel.guild.fetchMembers({ userIDs: [user.id] }).catch(() => {}))[0]  
+      )
+  );
   }
 }
