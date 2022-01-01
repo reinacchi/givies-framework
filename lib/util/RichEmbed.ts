@@ -197,7 +197,7 @@ export class RichEmbed {
     return this;
   }
 
-  setTimestamp(timestamp: Date = new Date()) {
+  setTimestamp(timestamp: Date | number = new Date()) {
     if (Number.isNaN(new Date(timestamp).getTime()))
       throw new Error("Invalid Date");
     this.timestamp = new Date(timestamp);
