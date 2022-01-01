@@ -31,6 +31,7 @@ rules:
   lines-between-class-members:
   - 2
   - always
+  no-var: 2
   object-curly-spacing:
   - 2
   - always
@@ -42,7 +43,12 @@ rules:
   - blankLine: always
     prev: '*'
     next: multiline-block-like
-  semi: 0
+  quotes:
+    - 2
+    - double
+  semi: 
+    - 2
+    - always
   sort-class-members/sort-class-members:
   - 2
   - order:
