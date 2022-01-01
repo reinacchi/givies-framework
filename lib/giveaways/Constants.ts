@@ -18,6 +18,7 @@ export interface PauseOptions {
   unPauseAfter: number;
   embedColor: number;
   durationAfterPause: number;
+  infiniteDurationText: string;
 }
 
 export interface GiveawayStartOptions {
@@ -161,6 +162,7 @@ export const PauseOptions: PauseOptions = {
   unPauseAfter: null,
   embedColor: 0xffff00,
   durationAfterPause: null,
+  infiniteDurationText: "`NEVER`"
 };
 
 export const GiveawayManagerOptions = {
