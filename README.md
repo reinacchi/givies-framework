@@ -30,6 +30,8 @@ Any contributions can be made via [pull requests](https://github.com/reinhello/g
 
 If you're confused where to get started, the [issue-tracker](https://github.com/reinhello/givies-framework/issues) is the best place to track any current existing issues.
 
+**Notes:** Please make sure to follow its [Contributing Guidelines](https://github.com/reinhello/givies-framework/blob/master/.github/CONTRIBUTING.md) before proceeding.
+
 ## License
 
 This framework is released under the [MIT License](https://github.com/reinhello/givies-framework/blob/master/LICENSE).
