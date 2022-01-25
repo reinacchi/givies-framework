@@ -2,18 +2,28 @@
 
 [![Discord Server](https://discord.com/api/guilds/772680478888034324/widget.png?style=shield)](https://discord.gg/22v8peAJp8)
 
-A framework to facilitate the development of a Discord bot called **Givies**.
+A framework to facilitate the development Discord bots.
 
-## Developing a Discord bot using Givies-Framework
+**This framework is still under development**
 
-- **Requirement:** You will need **[NodeJS v16.6.0+](https://nodejs.org)**.
+## Design Features
 
-If you wanted to **develop a Discord bot** using this framework, you need to get familiar with the [Eris](https://github.com/abalabahaha/eris) Discord API library. The contents of the framework are included as:
+This framework includes amazing features such as:
 
 - Giveaways
 - MongoDB Database
 - Utility Classes
+    - Logger
+    - RichEmbed Constructor
+    - and more...
 
+This framework also supports both **JavaScript** and **TypeScript** languages.
+
+## Developing a Discord bot using Givies-Framework
+
+- **Requirement:** You will need **[NodeJS v16.6.0+](https://nodejs.org)** installed.
+
+If you want to **develop a Discord bot** using this framework, you need to get familiar with the [Eris](https://github.com/abalabahaha/eris) Discord API library and the programming language itself.
 ## Contributing
 
 Any contributions can be made via [pull requests](https://github.com/reinhello/givies-framework/pulls).
