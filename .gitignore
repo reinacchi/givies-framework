@@ -1,3 +1,6 @@
 node_modules
 test
-lib
+lib/*/**.js
+lib/*/**.d.ts
+lib/*.d.ts
+lib/*.js
