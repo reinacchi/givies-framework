@@ -228,8 +228,4 @@ export class RichEmbed {
   spliceFields(index: number, deleteCount: number, ...fields: any) {
     this.fields.splice(index, deleteCount, ...this.normalizeFields(...fields));
   }
-
-  
-
-  
 }
