@@ -2,7 +2,7 @@
   "name": "givies-framework",
   "version": "0.1.0",
   "description": "A framework to facilitate the development of a Discord bot",
-  "main": "index.js",
+  "main": "lib/index.js",
   "engines": {
     "node": ">=16.6.0"
   },
