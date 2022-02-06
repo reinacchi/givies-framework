@@ -2,14 +2,14 @@
   "name": "givies-framework",
   "version": "0.1.0",
   "description": "A framework to facilitate the development of a Discord bot",
-  "main": "lib/index.js",
+  "main": "src/index.js",
   "engines": {
     "node": ">=16.6.0"
   },
   "files": [
-    "lib/**/*"
+    "src/**/*"
   ],
-  "types": "lib/index.d.ts",
+  "types": "src/index.d.ts",
   "scripts": {
     "build": "tsc",
     "lint": "eslint -c .eslintrc.yml lib/**.ts && echo \"\u001b[1m\u001b[32mSUCCESS\u001b[39m\u001b[22m\" || echo \"\u001b[1m\u001b[31mFAILED\u001b[39m\u001b[22m\"",
@@ -45,6 +45,7 @@
     "deepmerge": "^4.2.2",
     "eris": "^0.16.1",
     "moment": "^2.29.1",
+    "mongoose": "^6.1.10",
     "serialize-javascript": "^6.0.0"
   }
 }
