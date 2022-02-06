@@ -9,7 +9,7 @@
 		"lib": ["ES2021", "ESNext"],
 		"module": "commonjs",
 		"moduleResolution": "Node",
-		"outDir": "./lib",
+		"outDir": "./src",
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"skipDefaultLibCheck": true,
