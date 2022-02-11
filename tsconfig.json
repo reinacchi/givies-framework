@@ -7,7 +7,7 @@
 		"emitDecoratorMetadata": true,
 		"importHelpers": true,
 		"lib": ["ES2021", "ESNext"],
-		"module": "commonjs",
+		"module": "CommonJS",
 		"moduleResolution": "Node",
 		"outDir": "./src",
 		"resolveJsonModule": true,
