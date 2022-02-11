@@ -2,7 +2,7 @@
 
 [![Discord Server](https://discord.com/api/guilds/772680478888034324/widget.png?style=shield)](https://discord.gg/22v8peAJp8)
 
-A framework to facilitate the development of Discord bots.
+A framework to facilitate the development of Discord bots using [Eris](https://github.com/abalabahaha/eris).
 
 **This framework is still under development**
 
