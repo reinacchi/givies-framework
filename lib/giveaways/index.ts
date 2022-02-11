@@ -1,3 +1,3 @@
 export * as Constants from "./Constants";
 export { Giveaway } from "./Giveaway";
-export { GiveawaysManager } from "./GiveawayManager";
+export { GiveawaysManager } from "./GiveawaysManager";
