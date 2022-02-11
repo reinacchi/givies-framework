@@ -16,7 +16,7 @@ export class Util {
 
   static resolvePartialEmoji(emoji: string): { animated: boolean, name: string, id: string | null} | { id: string | null } {
     if (!emoji) return null;
-    if (typeof emoji === 'string') return /^\d{17,19}$/.test(emoji) ? { id: emoji } : Util.parseEmoji(emoji);
+    if (typeof emoji === "string") return /^\d{17,19}$/.test(emoji) ? { id: emoji } : Util.parseEmoji(emoji);
     const { id, name, animated } = emoji;
     if (!id && !name) return null;
     return { id, name, animated }; 

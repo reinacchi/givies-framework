@@ -21,7 +21,7 @@ export class RichEmbed {
   fields: EmbedField[];
 
   footer: EmbedFooter;
-  
+
   image: EmbedImage;
 
   thumbnail: EmbedImage;
@@ -29,7 +29,7 @@ export class RichEmbed {
   timestamp: Date | string;
 
   title: string;
-  
+
   url: string;
 
   /**
