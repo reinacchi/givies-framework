@@ -11,6 +11,10 @@ A framework to facilitate the development Discord bots.
 This framework includes amazing features such as:
 
 - Giveaways
+- Image Manipulations
+   - Captchas
+   - Rank Card
+   - and more...
 - MongoDB Database
 - Utility Classes
     - Logger
