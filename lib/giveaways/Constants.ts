@@ -1,6 +1,6 @@
 "use strict";
 
-import { Constants, MessageContent, Member, User } from "eris";
+import { AdvancedMessageContent, Constants, Member, User } from "eris";
 
 export interface BonusEntry {
   bonus(member?: Member): number | Promise<number>;
@@ -46,7 +46,7 @@ export interface GiveawaysMessages {
   giveawayEnded?: string;
   inviteToParticipate?: string;
   timeRemaining?: string;
-  winMessage?: string | MessageContent;
+  winMessage?: string | AdvancedMessageContent;
   drawing?: string;
   dropMessage?: string;
   embedFooter?: string | { text?: string; iconURL?: string };
@@ -92,8 +92,8 @@ export interface GiveawayEditOptions {
 export interface GiveawayRerollOptions {
   winnerCount?: number;
   messages?: {
-    congrat?: string | MessageContent;
-    error?: string | MessageContent;
+    congrat?: string | AdvancedMessageContent;
+    error?: string | AdvancedMessageContent;
   };
 }
 
