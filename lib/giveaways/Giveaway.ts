@@ -17,9 +17,10 @@ import {
   PauseOptions,
   GiveawaysMessages,
   GiveawayEditOptions,
+  GiveawayRerollOptions,
 } from "./Constants";
 import { GiveawaysManager } from "./GiveawaysManager";
-import { RichEmbed, Util } from "../util";
+import { RichEmbed } from "../utils";
 import merge from "deepmerge";
 import serialize from "serialize-javascript";
 
@@ -400,7 +401,7 @@ export class Giveaway extends EventEmitter {
               embed.description.slice(0, embed.description.indexOf("{winners}"))
             );
 
-            if (firstEmbed) {
+            if (firstEmbed.length) {
               this.channel.createMessage({
                 content: message?.length <= 2000 ? message : null,
                 embed: firstEmbed
@@ -429,7 +430,7 @@ export class Giveaway extends EventEmitter {
               embed.description.slice(embed.description.indexOf("{winners}") + 9)
             );
 
-            if (lastEmbed) {
+            if (lastEmbed.length) {
               this.channel.createMessage({ embed: lastEmbed });
             }
           }
@@ -551,6 +552,139 @@ export class Giveaway extends EventEmitter {
         text = text.replaceAll(match, replacer);
       });
     return text;
+  }
+
+  reroll(options: GiveawayRerollOptions = {}): Promise<Member[]> {
+    return new Promise(async (resolve, reject) => {
+      if (!this.ended) return reject(`Giveaway with Message ID ${this.messageID} hasn't ended`);
+
+      this.message ??= await this.fetchMessage().catch(() => { }) as Message<PossiblyUncachedTextableChannel>;
+
+      if (!this.message) return reject(`Unable to find Giveaway with ID ${this.messageID}`);
+      if (this.isDrop) return reject("You cannot reroll drop Giveaways");
+      if (!options || typeof options !== "object") return reject(`"options" is not an object (val=${options})`);
+      options = merge(GiveawayRerollOptions, options);
+
+      if (options.winnerCount && (!Number.isInteger(options.winnerCount) || options.winnerCount < 1)) return reject(`options.winnerCount is not an integet (val=${options.winnerCount})`);
+
+      const winners = await this.roll(options.winnerCount || undefined);
+
+      if (winners.length > 0) {
+        this.winnerIDs = winners.map((w) => w.id);
+        await this.manager.editGiveaway(this.messageID, this.data);
+
+        const embed = this.manager.generateEndEmbed(this, winners);
+
+        this.message.edit({
+          content: this.fillInString(this.messages.giveawayEnded),
+          embed: embed
+        }).catch(() => { });
+
+        let formattedWinners = winners.map((w) => `<@${w.id}>`).join(", ");
+        const congratMessage = this.fillInString((options.messages.congrat as AdvancedMessageContent).content || options.messages.congrat as string);
+        const message = congratMessage?.replace("{winners}", formattedWinners);
+
+        if (message?.length > 2000) {
+          const firstContentPart = congratMessage.slice(0, congratMessage.indexOf("{winners}"));
+
+          if (firstContentPart.length) {
+            this.channel.createMessage({
+              content: firstContentPart
+            });
+          }
+
+          while (formattedWinners.length >= 2000) {
+            await this.channel.createMessage({
+              content: formattedWinners.slice(0, formattedWinners.lastIndexOf(",", 1999)) + ","
+            });
+
+            formattedWinners = formattedWinners.slice(
+              formattedWinners.slice(0, formattedWinners.lastIndexOf(",", 1999) + 2).length
+            );
+          }
+
+          this.channel.createMessage({
+            content: formattedWinners
+          });
+
+          const lastContentPart = congratMessage.slice(congratMessage.indexOf("{winners}") + 9);
+
+          if (lastContentPart.length) {
+            this.channel.createMessage({
+              content: lastContentPart
+            });
+          }
+        }
+
+        if ((options.messages.congrat as AdvancedMessageContent).embed && typeof (options.messages.congrat as AdvancedMessageContent).embed === "object") {
+          if (message?.length > 2000) formattedWinners = winners.map((w) => `<@${w.id}>`).join(", ");
+
+          const embed = this.fillInEmbed((options.messages.congrat as AdvancedMessageContent).embed as RichEmbed);
+          const embedDescription = embed.description?.replace("{winners}", formattedWinners) ?? "";
+
+          if (embedDescription.length <= 4096) {
+            this.channel.createMessage({
+              content: message?.length <= 2000 ? message : null,
+              embed: embed.setDescription(embedDescription)
+            });
+          } else {
+            const firstEmbed = new RichEmbed(embed).setDescription(
+              embed.description.slice(0, embed.description.indexOf("{winners}"))
+            );
+
+            if (firstEmbed.length) {
+              this.channel.createMessage({
+                content: message?.length <= 2000 ? message : null,
+                embed: firstEmbed
+              });
+            }
+
+            const tempEmbed = new RichEmbed().setColor(embed.color);
+
+            while (formattedWinners.length >= 4096) {
+              await this.channel.createMessage({
+                embed: tempEmbed.setDescription(
+                  formattedWinners.slice(0, formattedWinners.lastIndexOf(",", 4095)) + ","
+                )
+              });
+
+              formattedWinners = formattedWinners.slice(
+                formattedWinners.slice(0, formattedWinners.lastIndexOf(",", 4095) + 2).length
+              );
+            }
+
+            this.channel.createMessage({
+              embed: tempEmbed.setDescription(formattedWinners)
+            });
+
+            const lastEmbed = tempEmbed.setDescription(
+              embed.description.slice(embed.description.indexOf("{winners}") + 9)
+            );
+
+            if (lastEmbed.length) {
+              this.channel.createMessage({
+                embed: lastEmbed
+              });
+            }
+          }
+        } else if (message?.length <= 2000) {
+          this.channel.createMessage({
+            content: message
+          });
+        }
+
+        resolve(winners);
+      } else {
+        const embed = this.fillInEmbed((options.messages.error as AdvancedMessageContent).embed as RichEmbed);
+
+        this.channel.createMessage({
+          content: this.fillInString((options.messages.error as AdvancedMessageContent).content || options.messages.error as string),
+          embed: embed ?? null
+        });
+
+        resolve([]);
+      }
+    });
   }
 
   async roll(winnerCount = this.winnerCount): Promise<Member[]> {
