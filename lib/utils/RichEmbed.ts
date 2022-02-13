@@ -48,6 +48,18 @@ export class RichEmbed {
     this.fields = data.fields || [];
   }
 
+  get length() {
+    return (
+      (this.title?.length ?? 0) +
+      (this.description?.length ?? 0) +
+      (this.fields.length >= 1
+        ? this.fields.reduce((prev, curr) => prev + curr.name.length + curr.value.length, 0)
+        : 0) +
+      (this.footer?.text.length ?? 0) +
+      (this.author?.name.length ?? 0)
+    );
+  }
+
   addField(name: string, value: string, inline = false) {
     if (this.fields.length >= 25)
       throw new RangeError("Embeds cannot contain more than 25 fields");
