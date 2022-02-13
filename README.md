@@ -27,7 +27,54 @@ This framework also supports both **JavaScript** and **TypeScript** languages.
 
 - **Requirement:** You will need **[NodeJS v16.6.0+](https://nodejs.org)** installed.
 
-If you want to **develop a Discord bot** using this framework, you need to get familiar with the [Eris](https://github.com/abalabahaha/eris) Discord API library and the programming language itself.
+To start developing a Discord bot, you may first initialize a new NodeJS project and install the necessary dependencies. Here's a simple steps how to get done:
+
+- Initialize a NodeJS project: `npm init -y`
+- Install Givies-Framework and Eris: `npm install eris givies-framework`
+- Open your project using any suitable code editor
+
+**Code Example:**
+
+Below is a very basic example how it works in JavaScript.
+
+```js
+const Eris = require("eris");
+const GiviesFramework = require("givies-framework");
+
+const client = new Eris.Client("Bot <BOT_TOKEN>", {
+    intents: [
+        "guilds",
+        "guildMessages"
+    ]
+});
+const captchaImage = new GiviesFramework.Images.Captcha(175, 50, 5);
+const captcha = captchaImage.createCaptcha();
+const logger = new GiviesFramework.Utils.Logger();
+
+client.on("ready", () => {
+    logger.info("CLIENT READY", `${client.user.username} has connected!`);
+});
+
+client.on("messageCreate", async (message) => {
+    if (message.author.bot) return;
+
+    if (message.content === "!ping") {
+        const embed = new GiviesFramework.Utils.RichEmbed();
+            .setTitle("Bot's ping")
+            .setDescription(`Pong! | ${message.member.guild.shard.latency}ms`)
+            .setColor(0x7289DA);
+
+        return client.createMessage(message.channel.id, { embed: embed });
+    } else if (message.content === "!captcha") {
+        return client.createMessage(message.channel.id, {
+            content: `Captcha text: ${captcha.text}`
+        });
+    }
+});
+
+client.connect();
+```
+
 ## Contributing
 
 Any contributions can be made via [pull requests](https://github.com/reinhello/givies-framework/pulls).
