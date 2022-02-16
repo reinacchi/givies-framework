@@ -13,12 +13,12 @@ export interface LastChanceOptions {
   threshold?: number;
 }
 export interface PauseOptions {
-  isPaused: boolean;
-  content: string;
-  unPauseAfter: number;
-  embedColor: number;
-  durationAfterPause: number;
-  infiniteDurationText: string;
+  isPaused?: boolean;
+  content?: string;
+  unPauseAfter?: number;
+  embedColor?: number;
+  durationAfterPause?: number;
+  infiniteDurationText?: string;
 }
 
 export interface GiveawayStartOptions {
