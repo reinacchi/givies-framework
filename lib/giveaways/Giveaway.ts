@@ -554,6 +554,57 @@ export class Giveaway extends EventEmitter {
     return text;
   }
 
+  pause(options: PauseOptions = {}): Promise<Giveaway> {
+    return new Promise(async (resolve, reject) => {
+      if (this.ended) return reject(`Giveaway with Message ID ${this.messageID} has ended`);
+
+      this.message ??= await this.fetchMessage().catch(() => { }) as Message<PossiblyUncachedTextableChannel>;
+
+      if (!this.message) return reject(`Unable to find Giveaway with ID ${this.messageID}`);
+      if (!this.pauseOptions.isPaused) return reject(`Giveaway with Message ID ${this.messageID} has already been paused`);
+      if (this.isDrop) return reject(`Drop Giveaways cannot be paused`);
+      if (this.endTimeout) clearTimeout(this.endTimeout);
+
+      const pauseOptions = this.options.pauseOptions || {};
+
+      if (typeof options.content === "string") pauseOptions.content = options.content;
+      if (Number.isFinite(options.unPauseAfter)) {
+        if (options.unPauseAfter < Date.now()) {
+          pauseOptions.unPauseAfter = Date.now() + options.unPauseAfter;
+          this.endAt = this.endAt + options.unPauseAfter;
+        } else {
+          pauseOptions.unPauseAfter = options.unPauseAfter;
+          this.endAt = this.endAt + options.unPauseAfter - Date.now();
+        }
+      } else {
+        delete pauseOptions.unPauseAfter;
+        pauseOptions.durationAfterPause = this.remainingTime;
+        this.endAt = Infinity;
+      }
+
+      if (options.embedColor) {
+        pauseOptions.embedColor = options.embedColor;
+      }
+
+      if (typeof options.infiniteDurationText === "string") {
+        pauseOptions.infiniteDurationText = options.infiniteDurationText;
+      }
+
+      pauseOptions.isPaused = true;
+      this.options.pauseOptions = pauseOptions;
+
+      await this.manager.editGiveaway(this.messageID, this.data);
+
+      const embed = this.manager.generateMainEmbed(this);
+
+      this.message = await this.message.edit({
+        content: this.fillInString(this.messages.giveaway),
+        embed: embed,
+      }).catch(() => { }) as Message<PossiblyUncachedTextableChannel>;
+      resolve(this);
+    });
+  }
+
   reroll(options: GiveawayRerollOptions = {}): Promise<Member[]> {
     return new Promise(async (resolve, reject) => {
       if (!this.ended) return reject(`Giveaway with Message ID ${this.messageID} hasn't ended`);
@@ -776,5 +827,35 @@ export class Giveaway extends EventEmitter {
           )[0]
       )
     );
+  }
+
+  unpause(): Promise<Giveaway> {
+    return new Promise(async (resolve, reject) => {
+      if (this.ended) return reject(`Giveaway with Message ID ${this.messageID} has ended`);
+
+      this.message ??= await this.fetchMessage().catch(() => { }) as Message<PossiblyUncachedTextableChannel>;
+
+      if (!this.message) return reject(`Unable to find Giveaway with Message ID ${this.messageID}`);
+      if (!this.pauseOptions.isPaused) return reject(`Giveaway with Message ID ${this.messageID} is not paused`);
+      if (this.isDrop) return reject(`Drop Giveaways cannot be unpaused`);
+      if (Number.isFinite(this.pauseOptions.durationAfterPause)) {
+        this.endAt = Date.now() + this.pauseOptions.durationAfterPause;
+      }
+
+      delete this.options.pauseOptions.unPauseAfter;
+      this.options.pauseOptions.isPaused = false;
+
+      this.ensureEndTimeout();
+
+      await this.manager.editGiveaway(this.messageID, this.data);
+
+      const embed = this.manager.generateMainEmbed(this);
+      
+      this.message = await this.message.edit({
+        content: this.fillInString(this.messages.giveaway),
+        embed: embed
+      }).catch(() => { }) as Message<PossiblyUncachedTextableChannel>;
+      resolve(this);
+    });
   }
 }
