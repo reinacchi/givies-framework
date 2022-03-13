@@ -14,7 +14,7 @@ export class Util {
     return match && { animated: Boolean(match[1]), name: match[2], id: match[3] ?? null };
   }
 
-  static resolvePartialEmoji(emoji: string): { animated: boolean, name: string, id: string | null} | { id: string | null } {
+  static resolvePartialEmoji(emoji: string): { animated: boolean, name: string, id: string | null } | { id: string | null } {
     if (!emoji) return null;
     if (typeof emoji === "string") return /^\d{17,19}$/.test(emoji) ? { id: emoji } : Util.parseEmoji(emoji);
     const { id, name, animated } = emoji;
