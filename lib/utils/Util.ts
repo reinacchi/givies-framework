@@ -1,7 +1,7 @@
 "use strict";
 
 export class Util {
-  static parseEmoji(text: string): { animated: boolean, name: string, id: string | null } {
+  static parseEmoji(text: string): { animated: boolean; name: string; id: string | null } {
     if (text.includes("%")) {
       text = decodeURIComponent(text);
     }
@@ -14,12 +14,12 @@ export class Util {
     return match && { animated: Boolean(match[1]), name: match[2], id: match[3] ?? null };
   }
 
-  static resolvePartialEmoji(emoji: string): { animated: boolean, name: string, id: string | null } | { id: string | null } {
+  static resolvePartialEmoji(emoji: string): { animated: boolean; name: string; id: string | null } | { id: string | null } {
     if (!emoji) return null;
     if (typeof emoji === "string") return /^\d{17,19}$/.test(emoji) ? { id: emoji } : Util.parseEmoji(emoji);
     const { id, name, animated } = emoji;
     if (!id && !name) return null;
-    return { id, name, animated }; 
+    return { id, name, animated };
   }
 
   static verifyString(data: string, error: any, errorMessage = `Expected typeof string, received ${data} instead`, allowEmpty = true): string {
