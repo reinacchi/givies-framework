@@ -15,7 +15,6 @@ This framework includes amazing features such as:
    - Captchas
    - Rank Card
    - and more...
-- MongoDB Database
 - Utility Classes
     - Logger
     - RichEmbed Constructor
