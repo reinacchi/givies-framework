@@ -1,6 +1,14 @@
 "use strict";
 
+/**
+ * Represents a static util class to ease on class construction
+ */
 export class Util {
+    /**
+     * Parse a emoji from a text
+     * @param text The tetx to be parse
+     * @returns {Object}
+     */
     static parseEmoji(text: string): { animated: boolean; name: string; id: string | null } {
         if (text.includes("%")) {
             text = decodeURIComponent(text);
@@ -14,6 +22,11 @@ export class Util {
         return match && { animated: Boolean(match[1]), name: match[2], id: match[3] ?? null };
     }
 
+    /**
+     * Resove a partial emoji
+     * @param emoji The partial emoji
+     * @returns {?Object}
+     */
     static resolvePartialEmoji(emoji: string): { animated: boolean; name: string; id: string | null } | { id: string | null } {
         if (!emoji) return null;
         if (typeof emoji === "string") return /^\d{17,19}$/.test(emoji) ? { id: emoji } : Util.parseEmoji(emoji);
@@ -22,6 +35,14 @@ export class Util {
         return { id, name, animated };
     }
 
+    /**
+     * Verifies the provided data is a string, otherwise throws provided error
+     * @param data The string to resolve
+     * @param error The error constructor. Default to `Error`
+     * @param errorMessage The error message to throw with
+     * @param allowEmpty Whether an empty string should be allowed
+     * @returns {String}
+     */
     static verifyString(data: string, error: any, errorMessage = `Expected typeof string, received ${data} instead`, allowEmpty = true): string {
         if (typeof data !== "string") throw new error(errorMessage);
         if (!allowEmpty && data.length === 0) throw new error(errorMessage);
