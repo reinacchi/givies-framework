@@ -1,33 +1,86 @@
 import chalk from "chalk";
 import moment from "moment";
 
+/**
+ * Represents a Logger class to facilitate the logging implementation
+ */
 export class Logger {
 
-    log(t: string, m: string, c: string) {
+    /**
+     * Represents a Logger class to facilitate the logging implementation
+     */
+    constructor() {
+
+    }
+
+    /**
+     * Logs a custom logging message
+     * @param t The title of the log
+     * @param m The message of the log
+     * @param c The custom hex code
+     * @returns {void}
+     */
+     log(t: string, m: string, c: string): void {
         console.log(`[ ${chalk.hex(c)(t)} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.hex(c)(m)}`);
     }
 
-    error(t: string, m: string) {
+    /**
+     * Logs an error logging message
+     * @param t The title of the log. Default is `ERROR`
+     * @param m The message of the log
+     * @returns {void}
+     */
+    error(t: string = "ERROR", m: string): void {
         console.log(`[ ${chalk.redBright(t)} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.redBright(m)}`);
     }
 
-    success(t: string, m: string) {
+    /**
+     * Logs a success logging message
+     * @param t The title of the log. Default is `SUCCESS`
+     * @param m The message of the log
+     * @returns {void}
+     */
+    success(t: string = "SUCCESS", m: string): void {
         console.log(`[ ${chalk.greenBright(t)} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.greenBright(m)}`);
     }
 
-    info(t: string, m: string) {
+    /**
+     * Logs an info logging message
+     * @param t The title of the log. Default is `INFO`
+     * @param m The message of the log
+     * @returns {void}
+     */
+    info(t: string = "INFO", m: string): void {
         console.log(`[ ${chalk.cyanBright(t)} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.cyanBright(m)}`);
     }
 
-    warn(t: string, m: string) {
+    /**
+     * Logs a warning logging message
+     * @param t The title of the log. Default is `WARNING`
+     * @param m The message of the log
+     * @returns {void}
+     */
+    warn(t: string = "WARNING", m: string): void {
         console.log(`[ ${chalk.yellow(t)} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.yellow(m)}`);
     }
 
-    command(t: string, m: string) {
+    /**
+     * Logs a command logging message
+     * @param t The title of the log. Default is `COMMAND`
+     * @param m The message of the log
+     * @returns {void}
+     */
+    command(t: string = "COMMAND", m: string): void {
         console.log(`[ ${chalk.hex("#DAEE94")(t)} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.hex("#DAEE94")(m)}`);
     }
 
-    system(t: string, m: string) {
+    /**
+     * Logs a system logging message
+     * @param t The title of the log. Default is `SYSTEM`
+     * @param m The message of the log
+     * @returns {void} 
+     */
+    system(t: string = "SYSTEM", m: string): void {
         console.log(`[ ${chalk.blue(t)} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.blue(m)}`);
     }
 }
