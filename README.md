@@ -1,6 +1,7 @@
 # Givies-Framework
 
 [![Discord Server](https://discord.com/api/guilds/772680478888034324/widget.png?style=shield)](https://discord.gg/22v8peAJp8)
+[![NPM](https://img.shields.io/npm/v/givies-framework?color=green&label=NPM)](https://npmjs.com/package/givies-framework)
 
 A framework to facilitate the development of Discord bots using [Eris](https://github.com/abalabahaha/eris).
 
