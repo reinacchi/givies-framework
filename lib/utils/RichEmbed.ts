@@ -71,6 +71,17 @@ export class RichEmbed {
     }
 
     /**
+     * Compares two given embed field to check whether they are equal
+     * @param field The first field
+     * @param otherField The second field
+     * @returns {Boolean}
+     * @ignore
+     */
+    private _fieldEquals(field: EmbedField, otherField: EmbedField): boolean {
+        return field.name === otherField.name && field.value === otherField.value && field.inline === otherField.inline;
+    }
+
+    /**
      * Adds a field to the embed. Max is 25
      * @param name The name of the field
      * @param value The value of the field
@@ -218,7 +229,7 @@ export class RichEmbed {
 
     /**
      * Sets the description of the embed
-     * @param description The description of the embed. Max length is 
+     * @param description The description of the embed
      * @returns {RichEmbed}
      */
     setDescription(description: string): RichEmbed {
@@ -348,16 +359,5 @@ export class RichEmbed {
     spliceFields(index: number, deleteCount: number, ...fields: any): RichEmbed {
         this.fields.splice(index, deleteCount, ...this.normalizeFields(...fields));
         return this;
-    }
-
-    /**
-     * Compares two given embed field to check whether they are equal
-     * @param field The first field
-     * @param otherField The second field
-     * @returns {Boolean}
-     * @ignore
-     */
-    private _fieldEquals(field: EmbedField, otherField: EmbedField): boolean {
-        return field.name === otherField.name && field.value === otherField.value && field.inline === otherField.inline;
     }
 }
