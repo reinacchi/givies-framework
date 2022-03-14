@@ -136,8 +136,8 @@ export class RichEmbed {
      */
     normalizeField(name: string, value: string, inline = false): EmbedField {
         return {
-            name: Util.verifyString(name, RangeError, 'EMBED_FIELD_NAME', false),
-            value: Util.verifyString(value, RangeError, 'EMBED_FIELD_VALUE', false),
+            name: Util.verifyString(name, RangeError, "EMBED_FIELD_NAME", false),
+            value: Util.verifyString(value, RangeError, "EMBED_FIELD_VALUE", false),
             inline,
         };
     }
@@ -151,7 +151,7 @@ export class RichEmbed {
         return fields
             .flat(2)
             .map(field =>
-                this.normalizeField(field.name, field.value, typeof field.inline === 'boolean' ? field.inline : false),
+                this.normalizeField(field.name, field.value, typeof field.inline === "boolean" ? field.inline : false),
             );
     }
 
