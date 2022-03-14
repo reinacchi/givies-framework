@@ -20,7 +20,7 @@ export class Logger {
      * @param c The custom hex code
      * @returns {void}
      */
-     log(t: string, m: string, c: string): void {
+    log(t: string, m: string, c: string): void {
         console.log(`[ ${chalk.hex(c)(t)} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.hex(c)(m)}`);
     }
 
@@ -30,7 +30,7 @@ export class Logger {
      * @param m The message of the log
      * @returns {void}
      */
-    error(t: string = "ERROR", m: string): void {
+    error(t = "ERROR", m: string): void {
         console.log(`[ ${chalk.redBright(t)} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.redBright(m)}`);
     }
 
@@ -40,7 +40,7 @@ export class Logger {
      * @param m The message of the log
      * @returns {void}
      */
-    success(t: string = "SUCCESS", m: string): void {
+    success(t = "SUCCESS", m: string): void {
         console.log(`[ ${chalk.greenBright(t)} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.greenBright(m)}`);
     }
 
@@ -50,7 +50,7 @@ export class Logger {
      * @param m The message of the log
      * @returns {void}
      */
-    info(t: string = "INFO", m: string): void {
+    info(t = "INFO", m: string): void {
         console.log(`[ ${chalk.cyanBright(t)} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.cyanBright(m)}`);
     }
 
@@ -60,7 +60,7 @@ export class Logger {
      * @param m The message of the log
      * @returns {void}
      */
-    warn(t: string = "WARNING", m: string): void {
+    warn(t = "WARNING", m: string): void {
         console.log(`[ ${chalk.yellow(t)} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.yellow(m)}`);
     }
 
@@ -70,7 +70,7 @@ export class Logger {
      * @param m The message of the log
      * @returns {void}
      */
-    command(t: string = "COMMAND", m: string): void {
+    command(t = "COMMAND", m: string): void {
         console.log(`[ ${chalk.hex("#DAEE94")(t)} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.hex("#DAEE94")(m)}`);
     }
 
@@ -80,7 +80,7 @@ export class Logger {
      * @param m The message of the log
      * @returns {void} 
      */
-    system(t: string = "SYSTEM", m: string): void {
+    system(t = "SYSTEM", m: string): void {
         console.log(`[ ${chalk.blue(t)} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.blue(m)}`);
     }
 }
