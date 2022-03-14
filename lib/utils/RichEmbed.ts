@@ -12,6 +12,9 @@ const HEX_REGEX = /^#?([a-fA-F0-9]{6})$/;
 const URL_REGEX =
     /^http(s)?:\/\/[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/;
 
+/**
+ * Represents an Embed class constructor
+ */
 export class RichEmbed {
     author: EmbedAuthor;
 
@@ -34,7 +37,8 @@ export class RichEmbed {
     url: string;
 
     /**
-     * @param {EmbedOptions} data
+     * Represents an Embed class constructor
+     * @param {EmbedOptions} data The embed data
      */
     constructor(data: EmbedOptions = {}) {
         if (data.title) this.title = data.title;
@@ -49,7 +53,12 @@ export class RichEmbed {
         this.fields = data.fields || [];
     }
 
-    get length() {
+    /**
+     * The accumulated length for the embed title, description, field, footer text, and author name
+     * @type {Number}
+     * @readonly
+     */
+    get length(): number {
         return (
             (this.title?.length ?? 0) +
             (this.description?.length ?? 0) +
@@ -61,7 +70,14 @@ export class RichEmbed {
         );
     }
 
-    addField(name: string, value: string, inline = false) {
+    /**
+     * Adds a field to the embed. Max is 25
+     * @param name The name of the field
+     * @param value The value of the field
+     * @param inline Whether the field should be displayed inline
+     * @returns {RichEmbed}
+     */
+    addField(name: string, value: string, inline = false): RichEmbed {
         if (this.fields.length >= 25)
             throw new RangeError("Embeds cannot contain more than 25 fields");
         if (typeof name !== "string")
@@ -88,10 +104,11 @@ export class RichEmbed {
     }
 
     /**
-     * Check if this embed is equal to another embed by comparing every single one of their properties
+     * Check if the embed is equal to another embed by comparing every single one of their properties
      * @param embed The embed to compare with
+     * @returns {Boolean}
      */
-    equals(embed: Embed) {
+    equals(embed: Embed): boolean {
         return (
             this.author?.name === embed.author?.name &&
             this.author?.url === embed.author?.url &&
@@ -110,7 +127,14 @@ export class RichEmbed {
         );
     }
 
-    normalizeField(name: string, value: string, inline = false) {
+    /**
+     * Normalize field input verifies strings
+     * @param name The name of the field
+     * @param value The value of the field
+     * @param inline Whether the field should be displayed inline
+     * @returns {EmbedField}
+     */
+    normalizeField(name: string, value: string, inline = false): EmbedField {
         return {
             name: Util.verifyString(name, RangeError, 'EMBED_FIELD_NAME', false),
             value: Util.verifyString(value, RangeError, 'EMBED_FIELD_VALUE', false),
@@ -118,7 +142,12 @@ export class RichEmbed {
         };
     }
 
-    normalizeFields(...fields) {
+    /**
+     * Normalize field input and resolves strings
+     * @param fields An array of fields to normalize
+     * @returns {EmbedField[]}
+     */
+    normalizeFields(...fields: EmbedField[]): EmbedField[] {
         return fields
             .flat(2)
             .map(field =>
@@ -126,7 +155,14 @@ export class RichEmbed {
             );
     }
 
-    setAuthor(name: string, url?: string, iconURL?: string) {
+    /**
+     * Sets the author of the embed
+     * @param name The name of the author
+     * @param url The URL of the author
+     * @param iconURL The icon URL of the author
+     * @returns {RichEmbed}
+     */
+    setAuthor(name: string, url?: string, iconURL?: string): RichEmbed {
         if (typeof name !== "string")
             throw new TypeError(
                 `Expected type 'string', received type ${typeof name}`
@@ -157,7 +193,12 @@ export class RichEmbed {
         return this;
     }
 
-    setColor(color: string | number) {
+    /**
+     * Sets the color of the embed
+     * @param color The color of the embed. Color must be in hex number
+     * @returns {RichEmbed}
+     */
+    setColor(color: string | number): RichEmbed {
         if (typeof color !== "string" && typeof color !== "number")
             throw new TypeError(
                 `Expected types 'string' or 'number', received type ${typeof color} instead`
@@ -175,7 +216,12 @@ export class RichEmbed {
         return this;
     }
 
-    setDescription(description: string) {
+    /**
+     * Sets the description of the embed
+     * @param description The description of the embed. Max length is 
+     * @returns {RichEmbed}
+     */
+    setDescription(description: string): RichEmbed {
         if (typeof description !== "string")
             throw new TypeError(
                 `Expected type 'string', received type '${typeof description}'`
@@ -186,7 +232,13 @@ export class RichEmbed {
         return this;
     }
 
-    setFooter(text: string, iconURL: string = undefined) {
+    /**
+     * Sets the foother of the embed
+     * @param text The text of the embed
+     * @param iconURL The icon URL of the embed
+     * @returns {RichEmbed}
+     */
+    setFooter(text: string, iconURL: string = undefined): RichEmbed {
         if (typeof text !== "string")
             throw new TypeError(
                 `Expected type 'string', received type ${typeof text}`
@@ -208,7 +260,12 @@ export class RichEmbed {
         return this;
     }
 
-    setImage(imageURL: string) {
+    /**
+     * Sets the image of the embed
+     * @param imageURL The image URL of the embed
+     * @returns {RichEmbed}
+     */
+    setImage(imageURL: string): RichEmbed {
         if (typeof imageURL !== "string")
             throw new TypeError(
                 `Expected type 'string', received type ${typeof imageURL}`
@@ -219,7 +276,12 @@ export class RichEmbed {
         return this;
     }
 
-    setThumbnail(thumbnailURL: string) {
+    /**
+     * Sets the thumbnail of the embed
+     * @param thumbnailURL The thumnail URL of the embed
+     * @returns {RichEmbed}
+     */
+    setThumbnail(thumbnailURL: string): RichEmbed {
         if (typeof thumbnailURL !== "string")
             throw new TypeError(
                 `Expected type 'string', received type ${typeof thumbnailURL}`
@@ -233,14 +295,24 @@ export class RichEmbed {
         return this;
     }
 
-    setTimestamp(timestamp: Date | number = new Date()) {
+    /**
+     * Sets the timestamp of the embed
+     * @param timestamp The timestamp of the embed. Default timestamp is current date
+     * @returns {RichEmbed}
+     */
+    setTimestamp(timestamp: Date | number = new Date()): RichEmbed {
         if (Number.isNaN(new Date(timestamp).getTime()))
             throw new Error("Invalid Date");
         this.timestamp = new Date(timestamp);
         return this;
     }
 
-    setTitle(title: string) {
+    /**
+     * Sets the title of the embed
+     * @param title The title of the embed
+     * @returns {RichEmbed}
+     */
+    setTitle(title: string): RichEmbed {
         if (typeof title !== "string")
             throw new TypeError(
                 `Expected type 'string', received type '${typeof title}'`
@@ -251,7 +323,12 @@ export class RichEmbed {
         return this;
     }
 
-    setURL(url: string) {
+    /**
+     * Sets the URL of the embed
+     * @param url The URL of the embed
+     * @returns {RichEmbed}
+     */
+    setURL(url: string): RichEmbed {
         if (typeof url !== "string")
             throw new TypeError(
                 `Expected type 'string', received type '${typeof url}'`
@@ -261,17 +338,26 @@ export class RichEmbed {
         return this;
     }
 
-    spliceFields(index: number, deleteCount: number, ...fields: any) {
+    /**
+     * Removes, replaces, and inserts fields in the embed. Max is 25
+     * @param index The index to start at
+     * @param deleteCount The number of fields to remove
+     * @param fields The replacing fields objects
+     * @returns {RichEmbed}
+     */
+    spliceFields(index: number, deleteCount: number, ...fields: any): RichEmbed {
         this.fields.splice(index, deleteCount, ...this.normalizeFields(...fields));
+        return this;
     }
 
     /**
      * Compares two given embed field to check whether they are equal
      * @param field The first field
      * @param otherField The second field
+     * @returns {Boolean}
      * @ignore
      */
-    private _fieldEquals(field: EmbedField, otherField: EmbedField) {
+    private _fieldEquals(field: EmbedField, otherField: EmbedField): boolean {
         return field.name === otherField.name && field.value === otherField.value && field.inline === otherField.inline;
     }
 }
