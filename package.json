@@ -12,8 +12,8 @@
   "types": "src/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "lint": "eslint -c .eslintrc.yml lib/**.ts && echo \"\u001b[1m\u001b[32mSUCCESS\u001b[39m\u001b[22m\" || echo \"\u001b[1m\u001b[31mFAILED\u001b[39m\u001b[22m\"",
-    "lint:fix": "eslint -c .eslintrc.yml lib/**.ts --fix && echo \"\u001b[1m\u001b[32mSUCCESS\u001b[39m\u001b[22m\" || echo \"\u001b[1m\u001b[31mFAILED\u001b[39m\u001b[22m\""
+    "lint": "eslint -c .eslintrc.yml lib/*/**.ts && echo \"\u001b[1m\u001b[32mSUCCESS\u001b[39m\u001b[22m\" || echo \"\u001b[1m\u001b[31mFAILED\u001b[39m\u001b[22m\"",
+    "lint:fix": "eslint -c .eslintrc.yml lib/*/**.ts --fix && echo \"\u001b[1m\u001b[32mSUCCESS\u001b[39m\u001b[22m\" || echo \"\u001b[1m\u001b[31mFAILED\u001b[39m\u001b[22m\""
   },
   "repository": {
     "type": "git",
@@ -25,7 +25,7 @@
     "typescript",
     "eris"
   ],
-  "author": "reinhardt",
+  "author": "Reinhardt",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/reinhello/givies-framework/issues"
