@@ -3,6 +3,7 @@
 import {
     AdvancedMessageContent,
     Client,
+    GuildTextableChannel,
     Member,
     Message,
     PossiblyUncachedTextableChannel,
@@ -12,7 +13,9 @@ import { EventEmitter } from "events";
 import {
     GiveawayData,
     GiveawayManagerOptions,
-    GiveawaysManagerOptions
+    GiveawayMessages,
+    GiveawaysManagerOptions,
+    GiveawayStartOptions
 } from "./Constants";
 import { Giveaway } from "./Giveaway";
 import { RichEmbed, Util } from "../utils";
@@ -467,5 +470,66 @@ export class GiveawaysManager extends EventEmitter {
             "utf-8"
         );
         return;
+    }
+
+    /**
+     * Starts a giveaway
+     * @param channel The channel of the giveaway
+     * @param options The start options of the giveaway
+     * @returns {Promise<Giveaway>}
+     */
+    start(channel: GuildTextableChannel, options: GiveawayStartOptions): Promise<Giveaway> {
+        return new Promise(async (resolve, reject) => {
+            if (!this.ready) return reject("The manager is not ready");
+            if (!channel?.id) return reject("Channel is not a valid text channel");
+            if (typeof options.prize !== "string" || (options.prize = options.prize.trim()).length > 256) return reject("`options.prize` is not a string or longer than 256 characters");
+            if (!Number.isInteger(options.winnerCount) || options.winnerCount < 1) return reject("`options.winnerCount` is not a positive integer");
+            if (options.isDrop && typeof options.isDrop !== "boolean") return reject("`options.isDrop` is not a boolean");
+            if (!options.isDrop && (!Number.isFinite(options.duration) || options.duration < 1)) return reject("`options.duration` is not a positive number");
+
+            const giveaway = new Giveaway(this, {
+                startAt: Date.now(),
+                endAt: options.isDrop ? Infinity : Date.now() + options.duration,
+                winnerCount: options.winnerCount,
+                channelID: channel.id,
+                guildID: channel.guild.id,
+                prize: options.prize,
+                hostedBy: options.hostedBy ? options.hostedBy.toString() : undefined,
+                messages:
+                    options.messages && typeof options.messages === "object"
+                        ? merge(GiveawayMessages, options.messages)
+                        : GiveawayMessages,
+                thumbnail: typeof options.thumbnail === "string" ? options.thumbnail : undefined,
+                reaction: Util.resolvePartialEmoji(options.reaction) ? options.reaction : undefined,
+                botsCanWin: typeof options.botsCanWin === "boolean" ? options.botsCanWin : undefined,
+                exemptPermissions: Array.isArray(options.exemptPermissions) ? options.exemptPermissions : undefined,
+                bonusEntries:
+                    Array.isArray(options.bonusEntries) && !options.isDrop
+                        ? (options.bonusEntries.filter((elem) => typeof elem === "object") as any) : undefined,
+                embedColor: typeof options.embedColor === "number" ? options.embedColor : undefined,
+                embedColorEnd: typeof options.embedColor === "number" ? options.embedColorEnd : undefined,
+                lastChance:
+                    options.lastChance && typeof options.lastChance === "object" && !options.isDrop
+                        ? options.lastChance
+                        : undefined,
+                pauseOptions:
+                    options.pauseOptions && typeof options.pauseOptions === "object" && !options.isDrop
+                        ? options.pauseOptions
+                        : undefined,
+                isDrop: options.isDrop
+            });
+
+            const embed = this.generateMainEmbed(giveaway);
+            const message = await channel.createMessage({
+                content: giveaway.fillInString(giveaway.messages.giveaway),
+                embed: embed
+            });
+            giveaway.messageID = message.id;
+            await message.addReaction(options.reaction);
+
+            this.giveaways.push(giveaway);
+            await this.saveGiveaway(giveaway.messageID, giveaway.data);
+            resolve(giveaway);
+        });
     }
 }
