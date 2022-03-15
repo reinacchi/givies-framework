@@ -16,24 +16,64 @@ const URL_REGEX =
  * Represents an Embed class constructor
  */
 export class RichEmbed {
+    /**
+     * The author of the embed
+     * @type {EmbedAuthor}
+     */
     author: EmbedAuthor;
 
+    /**
+     * The color of the embed. Color is in hex number
+     * @type {Number}
+     */
     color: number;
 
+    /**
+     * The description of the embed
+     * @type {String}
+     */
     description: string;
 
+    /**
+     * An array of fields of the embed
+     * @type {Array<EmbedField>}
+     */
     fields: EmbedField[];
 
+    /**
+     * The footer of the embed
+     * @type {EmbedFooter}
+     */
     footer: EmbedFooter;
 
+    /**
+     * The image of the embed
+     * @type {EmbedImage}
+     */
     image: EmbedImage;
 
+    /**
+     * The thumbnail of the embed
+     * @type {EmbedImage}
+     */
     thumbnail: EmbedImage;
 
+    /**
+     * The timestamp of the embed
+     * @type {Date | String}
+     */
     timestamp: Date | string;
 
+    /**
+     * The title of the embed
+     * @type {String}
+     */
     title: string;
 
+    /**
+     * The URL of the embed
+     * @type {String}
+     */
     url: string;
 
     /**
