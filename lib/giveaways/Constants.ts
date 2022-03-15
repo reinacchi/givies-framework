@@ -106,7 +106,7 @@ export interface GiveawayData {
     prize: string;
     channelID: string;
     guildID: string;
-    ended: boolean;
+    ended?: boolean;
     winnerIDs?: string[];
     messageID?: string;
     reaction?: any;
