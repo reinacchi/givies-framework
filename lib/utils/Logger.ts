@@ -89,7 +89,7 @@ export class Logger {
      * @param options.message The message of the log
      * @param options.title The title of the log. Default is `WARNING`
      * @returns {void}
-     */    
+     */
     warn(options: LoggingOptions): void {
         return console.log(`[ ${chalk.yellow(options.title ?? "WARNING")} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.yellow(options.message)}`);
     }
