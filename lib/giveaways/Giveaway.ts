@@ -258,9 +258,9 @@ export class Giveaway extends EventEmitter {
 
     /**
      * The exemptMembers function of the giveaway
-     * @type {Function}
+     * @type {any}
      */
-    get exemptMembersFunction(): Function {
+    get exemptMembersFunction(): any {
         return this.options.exemptMembers
             ? typeof this.options.exemptMembers === "string" &&
                 this.options.exemptMembers.includes("function anonymous")
