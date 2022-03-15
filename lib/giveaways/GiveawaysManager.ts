@@ -412,7 +412,7 @@ export class GiveawaysManager extends EventEmitter {
                     giveaway.messages.inviteToParticipate +
                     "\n" +
                     giveaway.messages.drawing.replace(
-                        "{timestamp}",
+                        "{duration}",
                         giveaway.endAt === Infinity
                             ? giveaway.pauseOptions.infiniteDurationText
                             : `<t:${Math.round(giveaway.endAt / 1000)}:R>`
