@@ -20,15 +20,40 @@ import merge from "deepmerge";
 import { access, readFile, writeFile } from "fs/promises";
 import serialize from "serialize-javascript";
 
+/**
+ * Represents the main Giveaways manager class
+ */
 export class GiveawaysManager extends EventEmitter {
+    /**
+     * Eris Client
+     * @type {Client}
+     */
     client: Client;
 
+    /**
+     * An array of Giveaways managed by the manager
+     * @type {Array<Giveaway>}
+     */
     giveaways: Giveaway[];
 
+    /**
+     * The Giveaways manager options
+     * @type {GiveawaysManagerOptions}
+     */
     options: GiveawaysManagerOptions;
 
+    /**
+     * Whether the manager is ready or not
+     * @type {Boolean}
+     */
     ready: boolean;
 
+    /**
+     * Represents the main Giveaways manager class
+     * @param client Eris Client
+     * @param options The Giveaways manager optioons
+     * @param init Whether the manager should initialize automatically
+     */
     constructor(client: Client, options?: GiveawaysManagerOptions, init = true) {
         super();
 
@@ -48,6 +73,7 @@ export class GiveawaysManager extends EventEmitter {
 
     /**
      * Check every giveaways and update them if necessary
+     * @returns {void}
      * @ignore
     */
     private _checkGiveaway() {
@@ -137,6 +163,7 @@ export class GiveawaysManager extends EventEmitter {
     /**
      * Handle Discord raw gateway events
      * @param packet Discord's Gateway payload packet
+     * @returns {Promise<Boolean>}
      * @ignore
      */
     private async _handleRawPacket(packet: RawPacket): Promise<boolean> {
@@ -185,6 +212,7 @@ export class GiveawaysManager extends EventEmitter {
 
     /**
      * Initialize the Giveaway manager
+     * @return {Promise<void>}
      * @ignore
      */
     private async _init(): Promise<void> {
@@ -213,7 +241,13 @@ export class GiveawaysManager extends EventEmitter {
         this.client.on("rawWS", (packet) => this._handleRawPacket(packet));
     }
 
-    delete(messageID: string, doNotDeleteMessage = false) {
+    /**
+     * Deletes a giveaway. This will delete the giveaway's message and its data
+     * @param messageID The ID of the giveaway message
+     * @param doNotDeleteMessage Whether the giveaway message remains or deleted
+     * @returns {Promise<Giveaway>}
+     */
+    delete(messageID: string, doNotDeleteMessage = false): Promise<Giveaway> {
         return new Promise(async (resolve, reject) => {
             const giveaway = this.giveaways.find((g) => g.messageID === messageID);
 
@@ -230,12 +264,15 @@ export class GiveawaysManager extends EventEmitter {
 
             this.emit("giveawayDeleted", giveaway);
             resolve(giveaway);
-
-            this.emit;
         });
     }
 
-    async deleteGiveaway(messageID: string) {
+    /**
+     * Deletes a giveaway from the database. See `GiveawaysManager#delete()` for client usage
+     * @param messageID The ID of the giveaway message
+     * @returns {Promise<void>}
+     */
+    async deleteGiveaway(messageID: string): Promise<void> {
         await writeFile(
             this.options.storage,
             JSON.stringify(
@@ -247,7 +284,13 @@ export class GiveawaysManager extends EventEmitter {
         return;
     }
 
-    async editGiveaway(messageID: string, giveawayData: GiveawayData) {
+    /**
+     * Edits a giveaway found in the database. See `GiveawaysManager#edit()` for client usage
+     * @param messageID The ID of the giveaway message
+     * @param giveawayData The giveaway data
+     * @returns {Promise<void>}
+     */
+    async editGiveaway(messageID: string, giveawayData: GiveawayData): Promise<void> {
         await writeFile(
             this.options.storage,
             JSON.stringify(
@@ -259,7 +302,13 @@ export class GiveawaysManager extends EventEmitter {
         return;
     }
 
-    end(messageID: string, noWinnerMessage: AdvancedMessageContent | string = null) {
+    /**
+     * Ends a giveaway. This method  will be called automatically when a giveaway supposes to end
+     * @param messageID The ID of the giveaway message
+     * @param noWinnerMessage Sent in the channel if there is no valid participant
+     * @returns {Promise<Array<Member>>}
+     */
+    end(messageID: string, noWinnerMessage: AdvancedMessageContent | string = null): Promise<Member[]> {
         return new Promise(async (resolve, reject) => {
             const giveaway = this.giveaways.find((g) => g.messageID === messageID);
 
@@ -272,6 +321,12 @@ export class GiveawaysManager extends EventEmitter {
         });
     }
 
+    /**
+     * Generate an end embed when a giveaway has ended
+     * @param giveaway The giveaway
+     * @param winners An array of giveaway winners
+     * @returns {RichEmbed}
+     */
     generateEndEmbed(giveaway: Giveaway, winners: Member[]): RichEmbed {
         let formattedWinners = winners.map((w) => `${w}`).join(", ");
 
@@ -302,6 +357,11 @@ export class GiveawaysManager extends EventEmitter {
             .setThumbnail(giveaway.thumbnail);
     }
 
+    /**
+     * generate an invalid embed when a giveaway has ended with not participants
+     * @param giveaway The giveaway
+     * @returns {RichEmbed}
+     */
     generateInvalidParticipantsEndEmbed(giveaway: Giveaway): RichEmbed {
         const embed = new RichEmbed()
             .setTitle(giveaway.prize)
@@ -314,6 +374,12 @@ export class GiveawaysManager extends EventEmitter {
         return giveaway.fillInEmbed(embed);
     }
 
+    /**
+     * Generate the main embed when a giveaway is active
+     * @param giveaway The giveaway
+     * @param lastChanceEnabled Whether to enable the last chance mode or not. Default is `false`
+     * @returns {RichEmbed}
+     */
     generateMainEmbed(giveaway: Giveaway, lastChanceEnabled = false): RichEmbed {
         const embed = new RichEmbed()
             .setTitle(giveaway.prize)
@@ -348,6 +414,10 @@ export class GiveawaysManager extends EventEmitter {
         return giveaway.fillInEmbed(embed);
     }
 
+    /**
+     * Gets an array of all giveaways from the database.
+     * @returns {Promise<Array<GiveawayData>>}
+     */
     async getAllGiveaways(): Promise<GiveawayData[]> {
         const storageExists = await access(this.options.storage).then(() => true).catch(() => false);
 
@@ -381,7 +451,13 @@ export class GiveawaysManager extends EventEmitter {
         }
     }
 
-    async saveGiveaway(messageID: string, giveawayData: GiveawayData) {
+    /**
+     * Saves the giveaway data in the database
+     * @param messageID The ID of the giveawya message
+     * @param giveawayData The giveaway data
+     * @returns {Promise<void>}
+     */
+    async saveGiveaway(messageID: string, giveawayData: GiveawayData): Promise<void> {
         await writeFile(
             this.options.storage,
             JSON.stringify(
