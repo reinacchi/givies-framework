@@ -1,78 +1,96 @@
 import chalk from "chalk";
 import moment from "moment";
 
+interface LoggingOptions {
+    title?: string;
+    message: string;
+}
+
+interface CustomLoggingOptions {
+    title: string;
+    message: string;
+    color: string;
+}
+
 /**
  * Represents a Logger class to facilitate the logging implementation
  */
 export class Logger {
     /**
      * Logs a command logging message
-     * @param t The title of the log. Default is `COMMAND`
-     * @param m The message of the log
+     * @param options The logging options
+     * @param options.message The message of the log
+     * @param options.title The title of the log. Default is `COMMAND`
      * @returns {void}
      */
-    command(t = "COMMAND", m: string): void {
-        console.log(`[ ${chalk.hex("#DAEE94")(t)} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.hex("#DAEE94")(m)}`);
+    command(options: LoggingOptions): void {
+        return console.log(`[ ${chalk.hex("#DAEE94")(options.title ?? "COMMAND")} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.hex("#DAEE94")(options.message)}`);
     }
 
     /**
      * Logs an error logging message
-     * @param t The title of the log. Default is `ERROR`
-     * @param m The message of the log
+     * @param options The logging options
+     * @param options.message The message of the log
+     * @param options.title The title of the log. Default is `ERROR`
      * @returns {void}
      */
-    error(t = "ERROR", m: string): void {
-        console.log(`[ ${chalk.redBright(t)} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.redBright(m)}`);
+    error(options: LoggingOptions): void {
+        return console.log(`[ ${chalk.redBright(options.title ?? "ERROR")} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.redBright(options.message)}`);
     }
 
     /**
      * Logs an info logging message
-     * @param t The title of the log. Default is `INFO`
-     * @param m The message of the log
+     * @param options The logging options
+     * @param options.message The message of the log
+     * @param options.title The title of the log. Default is `INFO`
      * @returns {void}
      */
-    info(t = "INFO", m: string): void {
-        console.log(`[ ${chalk.cyanBright(t)} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.cyanBright(m)}`);
+    info(options: LoggingOptions): void {
+        return console.log(`[ ${chalk.cyanBright(options.title ?? "INFO")} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.cyanBright(options.message)}`);
     }
 
     /**
      * Logs a custom logging message
-     * @param t The title of the log
-     * @param m The message of the log
-     * @param c The custom hex code
+     * @param options The logging options
+     * @param options.color The custom color of the log
+     * @param options.message The message of the log
+     * @param options.title The title of the log
      * @returns {void}
      */
-    log(t: string, m: string, c: string): void {
-        console.log(`[ ${chalk.hex(c)(t)} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.hex(c)(m)}`);
+    log(options: CustomLoggingOptions): void {
+        return console.log(`[ ${chalk.hex(options.color)(options.title)} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.hex(options.color)(options.message)}`);
     }
 
     /**
      * Logs a success logging message
-     * @param t The title of the log. Default is `SUCCESS`
-     * @param m The message of the log
+     * @param options The logging options
+     * @param options.message The message of the log
+     * @param options.title The title of the log. Default is `SUCCESS`
      * @returns {void}
      */
-    success(t = "SUCCESS", m: string): void {
-        console.log(`[ ${chalk.greenBright(t)} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.greenBright(m)}`);
+    success(options: LoggingOptions): void {
+        return console.log(`[ ${chalk.greenBright(options.title ?? "SUCCESS")} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.greenBright(options.message)}`);
     }
 
     /**
      * Logs a system logging message
-     * @param t The title of the log. Default is `SYSTEM`
-     * @param m The message of the log
+     * @param options The logging options
+     * @param options.message The message of the log
+     * @param options.title The title of the log. Default is `SYSTEM`
      * @returns {void}
      */
-    system(t = "SYSTEM", m: string): void {
-        console.log(`[ ${chalk.blue(t)} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.blue(m)}`);
+    system(options: LoggingOptions): void {
+        return console.log(`[ ${chalk.blue(options.title ?? "SYSTEM")} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.blue(options.message)}`);
     }
 
     /**
      * Logs a warning logging message
-     * @param t The title of the log. Default is `WARNING`
-     * @param m The message of the log
+     * @param options The logging options
+     * @param options.message The message of the log
+     * @param options.title The title of the log. Default is `WARNING`
      * @returns {void}
-     */
-    warn(t = "WARNING", m: string): void {
-        console.log(`[ ${chalk.yellow(t)} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.yellow(m)}`);
+     */    
+    warn(options: LoggingOptions): void {
+        return console.log(`[ ${chalk.yellow(options.title ?? "WARNING")} ] - ${chalk.grey(moment().format("MMMM Do YYYY, h:mm:ss a"))} - ${chalk.yellow(options.message)}`);
     }
 }
