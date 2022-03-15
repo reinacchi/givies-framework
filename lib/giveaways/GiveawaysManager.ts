@@ -12,10 +12,13 @@ import {
 import { EventEmitter } from "events";
 import {
     GiveawayData,
+    GiveawayEditOptions,
     GiveawayManagerOptions,
     GiveawayMessages,
+    GiveawayRerollOptions,
     GiveawaysManagerOptions,
-    GiveawayStartOptions
+    GiveawayStartOptions,
+    PauseOptions
 } from "./Constants";
 import { Giveaway } from "./Giveaway";
 import { RichEmbed, Util } from "../utils";
@@ -287,6 +290,16 @@ export class GiveawaysManager extends EventEmitter {
         return;
     }
 
+    edit(messageID: string, options: GiveawayEditOptions = {}) {
+        return new Promise(async (resolve, reject) => {
+            const giveaway = this.giveaways.find((g) => g.messageID === messageID);
+
+            if (!giveaway) return reject(`No Giveaway found with message ID ${messageID}`);
+
+            giveaway.edit(options).then(resolve).catch(reject);
+        });
+    }
+
     /**
      * Edits a giveaway found in the database. See `GiveawaysManager#edit()` for client usage
      * @param messageID The ID of the giveaway message
@@ -455,6 +468,41 @@ export class GiveawaysManager extends EventEmitter {
     }
 
     /**
+     * Pauses a giveaway
+     * @param messageID The ID of the giveaway message
+     * @param options Optional pause options
+     * @returns {Promise<Giveaway>}
+     */
+    pause(messageID: string, options: PauseOptions = {}): Promise<Giveaway> {
+        return new Promise(async (resolve, reject) => {
+            const giveaway = this.giveaways.find((g) => g.messageID === messageID);
+
+            if (!giveaway) return reject(`No Giveaway found with message ID ${messageID}`);
+
+            giveaway.pause(options).then(resolve).catch(reject);
+        });
+    }
+
+    /**
+     * Rerolls a giveaway
+     * @param messageID The ID of the giveawya message
+     * @param options Optional reroll options
+     * @returns {Promise<Array<Member>>}
+     */
+    reroll(messageID: string, options: GiveawayRerollOptions = {}): Promise<Member[]> {
+        return new Promise(async (resolve, reject) => {
+            const giveaway = this.giveaways.find((g) => g.messageID === messageID);
+
+            if (!giveaway) return reject(`No Giveaway found with message ID ${messageID}`);
+
+            giveaway.reroll(options).then((winners) => {
+                this.emit("giveawayRerolled", giveaway, winners);
+                resolve(winners);
+            }).catch(reject);
+        });
+    }
+
+    /**
      * Saves the giveaway data in the database
      * @param messageID The ID of the giveawya message
      * @param giveawayData The giveaway data
@@ -530,6 +578,21 @@ export class GiveawaysManager extends EventEmitter {
             this.giveaways.push(giveaway);
             await this.saveGiveaway(giveaway.messageID, giveaway.data);
             resolve(giveaway);
+        });
+    }
+
+    /**
+     * Unpauses a giveaway
+     * @param messageID The ID of the giveaway message
+     * @returns {Promise<Giveaway>}
+     */
+    unpause(messageID: string): Promise<Giveaway> {
+        return new Promise(async (resolve, reject) => {
+            const giveaway = this.giveaways.find((g) => g.messageID === messageID);
+
+            if (!giveaway) return reject(`No Giveaway found with message ID ${messageID}`);
+
+            giveaway.unpause().then(resolve).catch(reject);
         });
     }
 }
