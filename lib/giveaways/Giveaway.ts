@@ -24,43 +24,123 @@ import { RichEmbed } from "../utils";
 import merge from "deepmerge";
 import serialize from "serialize-javascript";
 
+/**
+ * Represents the Giveaway data class
+ */
 export class Giveaway extends EventEmitter {
+    /**
+     * The ID of the giveaway channel
+     * @type {String}
+     */
     channelID: string;
 
+    /**
+     * Eris Client
+     * @type {Client}
+     */
     client: Client;
 
+    /**
+     * The end timestamp of the giveaway
+     * @type {Number}
+     */
     endAt: number;
 
+    /**
+     * Whether the giveaway has ended or not
+     * @type {Boolean}
+     */
     ended: boolean;
 
+    /**
+     * The end timeout of the giveaway
+     * @type {NodeJS.Timeout}
+     */
     endTimeout: NodeJS.Timeout;
 
+    /**
+     * The extra data of the giveaway
+     * @type {any}
+     */
     extraData: any;
 
+    /**
+     * The ID of the giveaway guild
+     * @type {String}
+     */
     guildID: string;
 
+    /**
+     * The mention format of the user who hosts the giveaway
+     * @type {String}
+     */
     hostedBy: string;
 
+    /**
+     * The main giveaways manager
+     * @type {GiveawaysManager}
+     */
     manager: GiveawaysManager;
 
+    /**
+     * The message object of the giveaway
+     * @type {Message<PossiblyUncachedTextableChannel>}
+     */
     message: Message<PossiblyUncachedTextableChannel>;
 
+    /**
+     * The ID of the giveaway message
+     * @type {String}
+     */
     messageID: string;
 
+    /**
+     * The giveaway messages object
+     * @type {GiveawaysMessages}
+     */
     messages: GiveawaysMessages;
 
+    /**
+     * The giveaway data options
+     * @type {GiveawayData}
+     */
     options: GiveawayData;
 
+    /**
+     * The prize of the giveaway
+     * @type {String}
+     */
     prize: string;
 
+    /**
+     * The start timestamp of the giveaway
+     * @type {Number}
+     */
     startAt: number;
 
+    /**
+     * The thumbnail of the giveaway
+     * @type {String}
+     */
     thumbnail: string;
 
+    /**
+     * The winner count of the giveaway
+     * @type {Number}
+     */
     winnerCount: number;
 
+    /**
+     * An array of giveaway winners ID
+     * @type {Array<String>}
+     */
     winnerIDs: string[];
 
+    /**
+     * Represents the Giveaway data class
+     * @param manager The giveaways manager
+     * @param options The giveaway data options
+     */
     constructor(manager: GiveawaysManager, options: GiveawayData) {
         super();
 
@@ -84,20 +164,36 @@ export class Giveaway extends EventEmitter {
         this.winnerIDs = options.winnerIDs ?? [];
     }
 
+    /**
+     * An array of `BonusEntry` objects of the giveaway
+     * @type {Array<BonusEntry>}
+     */
     get bonusEntries(): BonusEntry[] {
         return eval(this.options.bonusEntries) ?? [];
     }
 
+    /**
+     * Whether bots can participate and win a giveaway
+     * @type {Boolean}
+     */
     get botsCanWin(): boolean {
         return typeof this.options.botsCanWin === "boolean"
             ? this.options.botsCanWin
             : this.manager.options.default.botsCanWin;
     }
 
+    /**
+     * The channel of the giveaway
+     * @type {TextChannel}
+     */
     get channel(): TextChannel {
         return this.client.getChannel(this.channelID) as TextChannel;
     }
 
+    /**
+     * The giveaway data
+     * @type {GiveawayData}
+     */
     get data(): GiveawayData {
         return {
             messageID: this.messageID,
@@ -134,21 +230,37 @@ export class Giveaway extends EventEmitter {
         };
     }
 
+    /**
+     * The duration of the giveaway
+     * @type {Number}
+     */
     get duration(): number {
         return this.endAt - this.startAt;
     }
 
+    /**
+     * The embed color of the giveaway
+     * @type {Number}
+     */
     get embedColor(): number {
         return this.options.embedColor ?? this.manager.options.default.embedColor;
     }
 
+    /**
+     * The end embed color of the giveaway
+     * @type {Number}
+     */
     get embedColorEnd(): number {
         return (
             this.options.embedColorEnd ?? this.manager.options.default.embedColorEnd
         );
     }
 
-    get exemptMembersFunction(): any {
+    /**
+     * The exemptMembers function of the giveaway
+     * @type {Function}
+     */
+    get exemptMembersFunction(): Function {
         return this.options.exemptMembers
             ? typeof this.options.exemptMembers === "string" &&
                 this.options.exemptMembers.includes("function anonymous")
@@ -157,16 +269,28 @@ export class Giveaway extends EventEmitter {
             : null;
     }
 
+    /**
+     * The exempt permissions of the giveaway
+     * @type {Array<String>}
+     */
     get exemptPermissions(): [keyof Constants["Permissions"]] {
         return this.options.exemptPermissions?.length
             ? this.options.exemptPermissions
             : this.manager.options.default.exemptPermissions;
     }
 
+    /**
+     * Whether the giveaway is a drop or not
+     * @type {Boolean}
+     */
     get isDrop(): boolean {
         return !!this.options.isDrop;
     }
 
+    /**
+     * The last chance object of the giveaway
+     * @type {LastChanceOptions}
+     */
     get lastChance(): LastChanceOptions {
         return merge(
             this.manager.options.default.lastChance,
@@ -174,24 +298,40 @@ export class Giveaway extends EventEmitter {
         );
     }
 
+    /**
+     * The original message URL of the giveaway
+     * @type {String}
+     */
     get messageURL(): string {
         return Endpoints.MESSAGE_URL(this.guildID, this.channelID, this.messageID);
     }
 
+    /**
+     * The pause options object of the giveaway
+     * @type {PauseOptions}
+     */
     get pauseOptions(): PauseOptions {
         return merge(PauseOptions, this.options.pauseOptions ?? {});
     }
 
+    /**
+     * The reaction of the giveaway
+     * @type {String}
+     */
     get reaction(): string {
         return this.reaction ?? this.manager.options.default.reaction;
     }
 
+    /**
+     * The remaining time of the giveaway
+     * @type {Number}
+     */
     get remainingTime(): number {
         return this.endAt - Date.now();
     }
 
     /**
-     * Check if a user gets a bonus entries for the  giveaway
+     * Check if a user gets a bonus entries for the giveaway
      * @param user The user to check
      * @returns {Promise<Number>}
      */
@@ -344,7 +484,7 @@ export class Giveaway extends EventEmitter {
     /**
      * Ends a giveaway
      * @param noWinnerMessage Sent in the channel if there is no valid participants for the giveaway
-     * @returns {Promise<Member[]>}
+     * @returns {Promise<Array<Member>>}
      */
     end(noWinnerMessage: AdvancedMessageContent | string = null): Promise<Member[]> {
         return new Promise(async (resolve, reject) => {
@@ -657,6 +797,11 @@ export class Giveaway extends EventEmitter {
         });
     }
 
+    /**
+     * Rerolls a giveaway
+     * @param options The reroll options
+     * @returns {Promise<Array<Member>>}
+     */
     reroll(options: GiveawayRerollOptions = {}): Promise<Member[]> {
         return new Promise(async (resolve, reject) => {
             if (!this.ended) return reject(`Giveaway with Message ID ${this.messageID} hasn't ended`);
@@ -790,6 +935,11 @@ export class Giveaway extends EventEmitter {
         });
     }
 
+    /**
+     * Roll a giveaway to obtains winner(s)
+     * @param winnerCount The winner count
+     * @returns {Promise<Array<Member>>}
+     */
     async roll(winnerCount = this.winnerCount): Promise<Member[]> {
         if (!this.message) return [];
 
@@ -881,6 +1031,10 @@ export class Giveaway extends EventEmitter {
         );
     }
 
+    /**
+     * Unpause a giveaway
+     * @returns {Promise<Giveaway>}
+     */
     unpause(): Promise<Giveaway> {
         return new Promise(async (resolve, reject) => {
             if (this.ended) return reject(`Giveaway with Message ID ${this.messageID} has ended`);
