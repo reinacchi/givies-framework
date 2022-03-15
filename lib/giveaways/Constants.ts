@@ -69,7 +69,7 @@ export interface GiveawaysManagerOptions {
     endedGiveawaysLifetime?: number;
     default?: {
         botsCanWin?: boolean;
-        exemptPermissions?: [keyof Constants["Permissions"]];
+        exemptPermissions?: [keyof Constants["Permissions"]] | any;
         exemptMembers?: (member: Member) => boolean | Promise<boolean>;
         embedColor?: number;
         embedColorEnd?: number;
@@ -132,21 +132,14 @@ export const GiveawayMessages: GiveawaysMessages = {
     giveaway: "🎉🎉 **GIVEAWAY** 🎉🎉",
     giveawayEnded: "🎉🎉 **GIVEAWAY ENDED** 🎉🎉",
     inviteToParticipate: "React with 🎉 to participate!",
-    timeRemaining: "Time remaining: **{duration}**",
-    winMessage:
-    "Congratulations, {winners}! You won **{prize}**! \n {messageURL}",
+    drawing: "Drawing: **{duration}**",
+    winMessage: "Congratulations, {winners}! You won **{prize}**! \n {messageURL}",
+    dropMessage: "Be the first to react 🎉 !",
     embedFooter: "Powered by the givies-framework",
     noWinner: "Giveaway cancelled, no valid participations.",
     winners: "winner(s)",
     endedAt: "Ended at",
     hostedBy: "Hosted by: {user}",
-    units: {
-        seconds: "Seconds",
-        minutes: "Minutes",
-        hours: "Hours",
-        days: "Days",
-        pluralS: false,
-    },
 };
 
 export const LastChanceOptions: LastChanceOptions = {
@@ -165,9 +158,9 @@ export const PauseOptions: PauseOptions = {
     infiniteDurationText: "`NEVER`"
 };
 
-export const GiveawayManagerOptions = {
+export const GiveawayManagerOptions: GiveawaysManagerOptions = {
     storage: "./giveaways.json",
-    updateCountdownEvery: 10000,
+    forceUpdateEvery: 10000,
     endedGiveawaysLifetime: null,
     default: {
         botsCanWin: false,
