@@ -333,15 +333,15 @@ export class RichEmbed {
      * @returns {RichEmbed}
      */
     setThumbnail(thumbnailURL: string): RichEmbed {
-        if (typeof thumbnailURL !== "string")
-            throw new TypeError(
-                `Expected type 'string', received type ${typeof thumbnailURL}`
-            );
-        if (
-            !thumbnailURL.startsWith("attachment://") &&
-            !URL_REGEX.test(thumbnailURL)
-        )
-            throw new Error("Not a well formed URL");
+        // if (typeof thumbnailURL !== "string")
+        //     throw new TypeError(
+        //         `Expected type 'string', received type ${typeof thumbnailURL}`
+        //     );
+        // if (
+        //     !thumbnailURL.startsWith("attachment://") &&
+        //     !URL_REGEX.test(thumbnailURL)
+        // )
+        //     throw new Error("Not a well formed URL");
         this.thumbnail = { url: thumbnailURL };
         return this;
     }
