@@ -319,7 +319,7 @@ export class Giveaway extends EventEmitter {
      * @type {String}
      */
     get reaction(): string {
-        return this.reaction ?? this.manager.options.default.reaction;
+        return this.options.reaction ?? this.manager.options.default.reaction;
     }
 
     /**
