@@ -344,7 +344,7 @@ export class GiveawaysManager extends EventEmitter {
      * @returns {RichEmbed}
      */
     generateEndEmbed(giveaway: Giveaway, winners: Member[]): RichEmbed {
-        let formattedWinners = winners.map((w) => `${w}`).join(", ");
+        let formattedWinners = winners.map((w) => `${w.id}`).join(", ");
 
         const strings = {
             winners: giveaway.fillInString(giveaway.messages.winners),
@@ -353,7 +353,7 @@ export class GiveawaysManager extends EventEmitter {
             prize: giveaway.fillInString(giveaway.prize)
         };
 
-        const descriptionString = (formattedWinners) =>
+        const descriptionString = (formattedWinners: string) =>
             strings.winners + " " + formattedWinners + (giveaway.hostedBy ? "\n" + strings.hostedBy : "");
 
         for (
@@ -367,6 +367,7 @@ export class GiveawaysManager extends EventEmitter {
 
         return new RichEmbed()
             .setTitle(strings.prize)
+            .setDescription(descriptionString(formattedWinners))
             .setColor(giveaway.embedColorEnd)
             .setFooter(strings.endedAt, (giveaway.messages.embedFooter as { text?: string; iconURL?: string }).iconURL)
             .setTimestamp(giveaway.endAt)
