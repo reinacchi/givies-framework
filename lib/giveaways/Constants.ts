@@ -137,9 +137,9 @@ export const GiveawayMessages: GiveawaysMessages = {
     dropMessage: "Be the first to react 🎉 !",
     embedFooter: "Powered by the givies-framework",
     noWinner: "Giveaway cancelled, no valid participations.",
-    winners: "winner(s)",
+    winners: "Winner(s):",
     endedAt: "Ended at",
-    hostedBy: "Hosted by: {user}",
+    hostedBy: "Hosted by: {this.hostedBy}",
 };
 
 export const LastChanceOptions: LastChanceOptions = {

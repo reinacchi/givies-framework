@@ -344,7 +344,7 @@ export class GiveawaysManager extends EventEmitter {
      * @returns {RichEmbed}
      */
     generateEndEmbed(giveaway: Giveaway, winners: Member[]): RichEmbed {
-        let formattedWinners = winners.map((w) => `${w.id}`).join(", ");
+        let formattedWinners = winners.map((w) => `<@${w.id}>`).join(", ");
 
         const strings = {
             winners: giveaway.fillInString(giveaway.messages.winners),
