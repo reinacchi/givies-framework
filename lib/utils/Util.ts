@@ -5,6 +5,15 @@
  */
 export class Util {
     /**
+     * Copies an object 
+     * @param obj The object to clone
+     * @returns {Object}
+     */
+    static cloneObject(obj): Object {
+        return Object.assign(Object.create(obj), obj);
+    }
+
+    /**
      * Parse a emoji from a text
      * @param text The tetx to be parse
      * @returns {Object}
