@@ -118,7 +118,7 @@ export class GiveawaysManager extends EventEmitter {
                 }
 
                 if (Number.isFinite(giveaway.pauseOptions.unPauseAfter) && Date.now() > giveaway.pauseOptions.unPauseAfter) {
-                    return; // this.unpause(giveaway.messageID).catch(() => { });
+                    return this.unpause(giveaway.messageID).catch(() => { });
                 }
             }
 

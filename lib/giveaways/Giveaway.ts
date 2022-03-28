@@ -752,7 +752,7 @@ export class Giveaway extends EventEmitter {
             this.message ??= await this.fetchMessage().catch(() => { }) as Message<PossiblyUncachedTextableChannel>;
 
             if (!this.message) return reject(`Unable to find Giveaway with ID ${this.messageID}`);
-            if (!this.pauseOptions.isPaused) return reject(`Giveaway with Message ID ${this.messageID} has already been paused`);
+            if (this.pauseOptions.isPaused) return reject(`Giveaway with Message ID ${this.messageID} has already been paused`);
             if (this.isDrop) return reject("Drop Giveaways cannot be paused");
             if (this.endTimeout) clearTimeout(this.endTimeout);
 
