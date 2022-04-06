@@ -5,11 +5,11 @@
  */
 export class Util {
     /**
-     * Copies an object 
+     * Copies an object
      * @param obj The object to clone
      * @returns {Object}
      */
-    static cloneObject(obj): Object {
+    static cloneObject(obj): object {
         return Object.assign(Object.create(obj), obj);
     }
 
