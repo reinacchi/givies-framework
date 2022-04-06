@@ -90,7 +90,8 @@ export class RichEmbed {
         if (data.image) this.image = data.image;
         if (data.thumbnail) this.thumbnail = data.thumbnail;
         if (data.author) this.author = data.author;
-        this.fields = data.fields || [];
+        this.fields = [];
+        if (data.fields) this.fields = data.fields.map(Util.cloneObject) as EmbedField[] || this.normalizeFields(data.fields as any);
     }
 
     /**
