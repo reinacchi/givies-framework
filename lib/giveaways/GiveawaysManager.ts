@@ -276,9 +276,9 @@ export class GiveawaysManager extends EventEmitter {
     /**
      * Deletes a giveaway from the database. See `GiveawaysManager#delete()` for client usage
      * @param messageID The ID of the giveaway message
-     * @returns {Promise<void>}
+     * @returns {Promise<any>}
      */
-    async deleteGiveaway(messageID: string): Promise<void> {
+    async deleteGiveaway(messageID: string): Promise<any> {
         await writeFile(
             this.options.storage,
             JSON.stringify(
@@ -304,9 +304,9 @@ export class GiveawaysManager extends EventEmitter {
      * Edits a giveaway found in the database. See `GiveawaysManager#edit()` for client usage
      * @param messageID The ID of the giveaway message
      * @param giveawayData The giveaway data
-     * @returns {Promise<void>}
+     * @returns {Promise<any>}
      */
-    async editGiveaway(messageID: string, giveawayData: GiveawayData): Promise<void> {
+    async editGiveaway(messageID: string, giveawayData: GiveawayData): Promise<any> {
         await writeFile(
             this.options.storage,
             JSON.stringify(
@@ -507,9 +507,9 @@ export class GiveawaysManager extends EventEmitter {
      * Saves the giveaway data in the database
      * @param messageID The ID of the giveawya message
      * @param giveawayData The giveaway data
-     * @returns {Promise<void>}
+     * @returns {Promise<any>}
      */
-    async saveGiveaway(messageID: string, giveawayData: GiveawayData): Promise<void> {
+    async saveGiveaway(messageID: string, giveawayData: GiveawayData): Promise<any> {
         await writeFile(
             this.options.storage,
             JSON.stringify(
