@@ -789,10 +789,10 @@ export class Giveaway extends EventEmitter {
 
             const embed = this.manager.generateMainEmbed(this);
 
-            this.message = await this.message.edit({
+            this.message.edit({
                 content: this.fillInString(this.messages.giveaway),
                 embed: embed,
-            }).catch(() => { }) as Message<PossiblyUncachedTextableChannel>;
+            }).catch(() => { });
             resolve(this);
         });
     }
