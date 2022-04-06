@@ -45,7 +45,6 @@ export interface GiveawaysMessages {
     giveaway?: string;
     giveawayEnded?: string;
     inviteToParticipate?: string;
-    timeRemaining?: string;
     winMessage?: string | AdvancedMessageContent;
     drawing?: string;
     dropMessage?: string;
@@ -54,13 +53,6 @@ export interface GiveawaysMessages {
     winners?: string;
     endedAt?: string;
     hostedBy?: string;
-    units?: {
-        seconds?: string;
-        minutes?: string;
-        hours?: string;
-        days?: string;
-        pluralS?: boolean;
-    };
 }
 
 export interface GiveawaysManagerOptions {
