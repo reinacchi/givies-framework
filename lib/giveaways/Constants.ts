@@ -1,6 +1,6 @@
 "use strict";
 
-import { AdvancedMessageContent, Constants, Member, User } from "eris";
+import { AdvancedMessageContent, Constants, Member } from "eris";
 
 export interface BonusEntry {
     bonus(member?: Member): number | Promise<number>;
@@ -25,7 +25,7 @@ export interface GiveawayStartOptions {
     prize: string;
     winnerCount: number;
     duration?: number; // can be null for drops
-    hostedBy?: User;
+    hostedBy?: string;
     botsCanWin?: boolean;
     exemptPermissions?: [keyof Constants["Permissions"]];
     exemptMembers?: (member: Member) => boolean | Promise<boolean>;
