@@ -81,7 +81,7 @@ export class RichEmbed {
      * @param {EmbedOptions} data The embed data
      * @param {Boolean} skipValidation
      */
-    constructor(data: EmbedOptions = {}, skipValidation: boolean = false) {
+    constructor(data: EmbedOptions = {}, skipValidation = false) {
         if (data.title) this.title = data.title;
         if (data.description) this.description = data.description;
         if (data.url) this.url = data.url;
@@ -92,6 +92,7 @@ export class RichEmbed {
         if (data.thumbnail) this.thumbnail = data.thumbnail;
         if (data.author) this.author = data.author;
         this.fields = [];
+
         if (data.fields) {
             // @ts-ignore:next-line
             this.fields = skipValidation ? data.fields.map(Util.cloneObject) : this.normalizeFields(data.fields as EmbedField);
