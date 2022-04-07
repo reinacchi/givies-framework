@@ -296,6 +296,7 @@ export class GiveawaysManager extends EventEmitter {
 
             if (!giveaway) return reject(`No Giveaway found with message ID ${messageID}`);
 
+            this.emit("giveawayEdited", giveaway);
             giveaway.edit(options).then(resolve).catch(reject);
         });
     }
@@ -480,6 +481,7 @@ export class GiveawaysManager extends EventEmitter {
 
             if (!giveaway) return reject(`No Giveaway found with message ID ${messageID}`);
 
+            this.emit("giveawayPaused", giveaway);
             giveaway.pause(options).then(resolve).catch(reject);
         });
     }
@@ -576,6 +578,7 @@ export class GiveawaysManager extends EventEmitter {
             giveaway.messageID = message.id;
             await message.addReaction(options.reaction);
 
+            this.emit("giveawayStarted", giveaway, channel);
             this.giveaways.push(giveaway);
             await this.saveGiveaway(giveaway.messageID, giveaway.data);
             resolve(giveaway);
@@ -593,6 +596,7 @@ export class GiveawaysManager extends EventEmitter {
 
             if (!giveaway) return reject(`No Giveaway found with message ID ${messageID}`);
 
+            this.emit("giveawayUnpaused", giveaway);
             giveaway.unpause().then(resolve).catch(reject);
         });
     }
