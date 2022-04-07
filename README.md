@@ -4,9 +4,6 @@
 [![NPM](https://img.shields.io/npm/v/givies-framework?color=green&label=NPM)](https://npmjs.com/package/givies-framework)
 
 A framework to facilitate the development of Discord bots using [Eris](https://github.com/abalabahaha/eris).
-
-**This framework is still under development**
-
 ## Design Features
 
 This framework includes amazing features such as:
@@ -14,8 +11,6 @@ This framework includes amazing features such as:
 - Giveaways
 - Image Manipulations
    - Captchas
-   - Rank Card
-   - and more...
 - Utility Classes
     - Logger
     - RichEmbed Constructor
