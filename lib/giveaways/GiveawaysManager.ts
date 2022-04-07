@@ -157,7 +157,7 @@ export class GiveawaysManager extends EventEmitter {
             const updatedEmbed = this.generateMainEmbed(giveaway, lastChanceEnabled);
             const requireUpdate = !updatedEmbed.equals(giveaway.message.embeds[0]) || giveaway.message.content !== giveaway.fillInString(giveaway.messages.giveaway);
 
-            if (requireUpdate || this.options.forceUpdateEvery) {
+            if (requireUpdate && this.options.forceUpdateEvery !== null) {
                 giveaway.message = await giveaway.message.edit({
                     content: giveaway.fillInString(giveaway.messages.giveaway),
                     embed: updatedEmbed
