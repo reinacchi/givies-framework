@@ -1,8 +1,9 @@
 # Givies-Framework
 
 [![Discord Server](https://discord.com/api/guilds/772680478888034324/widget.png?style=shield)](https://discord.gg/22v8peAJp8)
+[![CodeFactor](https://www.codefactor.io/repository/github/reinhello/givies-framework/badge)](https://www.codefactor.io/repository/github/reinhello/givies-framework)
 [![NPM](https://img.shields.io/npm/v/givies-framework?color=green)](https://npmjs.com/package/givies-framework)
-[![RELEASE](https://img.shields.io/github/v/release/reinhello/givies-framework)](https://github.com/reinhello/givies-framework/releases/latest)
+[![Release](https://img.shields.io/github/v/release/reinhello/givies-framework)](https://github.com/reinhello/givies-framework/releases/latest)
 
 A framework to facilitate the development of Discord bots using [Eris](https://github.com/abalabahaha/eris).
 ## Design Features
