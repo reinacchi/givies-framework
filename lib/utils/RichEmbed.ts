@@ -79,8 +79,9 @@ export class RichEmbed {
     /**
      * Represents an Embed class constructor
      * @param {EmbedOptions} data The embed data
+     * @param {Boolean} skipValidation
      */
-    constructor(data: EmbedOptions = {}) {
+    constructor(data: EmbedOptions = {}, skipValidation = false) {
         if (data.title) this.title = data.title;
         if (data.description) this.description = data.description;
         if (data.url) this.url = data.url;
@@ -91,7 +92,11 @@ export class RichEmbed {
         if (data.thumbnail) this.thumbnail = data.thumbnail;
         if (data.author) this.author = data.author;
         this.fields = [];
-        if (data.fields) this.fields = data.fields.map(Util.cloneObject) as EmbedField[] || this.normalizeFields(data.fields as any);
+
+        if (data.fields) {
+            // @ts-ignore:next-line
+            this.fields = skipValidation ? data.fields.map(Util.cloneObject) : this.normalizeFields(data.fields as EmbedField);
+        }
     }
 
     /**
@@ -170,7 +175,7 @@ export class RichEmbed {
             this.description === embed.description &&
             this.url === embed.url &&
             this.timestamp === embed.timestamp &&
-            this.fields.length === embed.fields.length &&
+            this.fields.length === (embed.fields ? embed.fields?.length : 0) &&
             this.fields.every((field, i) => this._fieldEquals(field, embed.fields[i])) &&
             this.footer?.text === embed.footer?.text &&
             this.footer?.icon_url === (embed.footer?.icon_url ?? embed.footer?.icon_url) &&
