@@ -230,7 +230,7 @@ export class GiveawaysManager extends EventEmitter {
 
         setInterval(() => {
             if (this.client.startTime) this._checkGiveaway.call(this);
-        }, this.options.forceUpdateEvery);
+        }, this.options.forceUpdateEvery || 15_000);
 
         this.ready = true;
 
