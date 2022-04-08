@@ -152,7 +152,7 @@ export const PauseOptions: PauseOptions = {
 
 export const GiveawayManagerOptions: GiveawaysManagerOptions = {
     storage: "./giveaways.json",
-    forceUpdateEvery: 10000,
+    forceUpdateEvery: null,
     endedGiveawaysLifetime: null,
     default: {
         botsCanWin: false,
