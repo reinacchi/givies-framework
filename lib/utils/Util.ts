@@ -14,6 +14,24 @@ export class Util {
     }
 
     /**
+     * Finds a common element from arrays.
+     * @param firstArray The first array to compare
+     * @param secondArray The second array to compare
+     * @returns {Boolean}
+     */
+    static findCommonElement(firstArray: string[], secondArray: string[]): boolean {
+        for (let i = 0; i < firstArray.length; i++) {
+            for (let j = 0; j < secondArray.length; j++) {
+                if (firstArray[i] === secondArray[j]) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Parse a emoji from a text
      * @param text The tetx to be parse
      * @returns {Object}
