@@ -1,6 +1,7 @@
 import {
     AdvancedMessageContent,
     Client,
+    CommandInteraction,
     Constants,
     Member,
     Message,
@@ -800,9 +801,10 @@ export class Giveaway extends EventEmitter {
     /**
      * Rerolls a giveaway
      * @param options The reroll options
+     * @param interaction Optional Eris' command interaction
      * @returns {Promise<Array<Member>>}
      */
-    reroll(options: GiveawayRerollOptions = {}): Promise<Member[]> {
+    reroll(options: GiveawayRerollOptions = {}, interaction?: CommandInteraction): Promise<Member[]> {
         return new Promise(async (resolve, reject) => {
             if (!this.ended) return reject(`Giveaway with Message ID ${this.messageID} hasn't ended`);
 
@@ -925,10 +927,18 @@ export class Giveaway extends EventEmitter {
             } else {
                 const embed = this.fillInEmbed((options.messages.error as AdvancedMessageContent).embed as RichEmbed);
 
-                this.channel.createMessage({
-                    content: this.fillInString((options.messages.error as AdvancedMessageContent).content || options.messages.error as string),
-                    embed: embed ?? null
-                });
+                if (options.interactionOptions.enabled) {
+                    interaction.createMessage({
+                        content: this.fillInString((options.messages.error as AdvancedMessageContent).content || options.messages.error as string),
+                        embeds: (options.messages.error as AdvancedMessageContent).embed ? [(options.messages.error as AdvancedMessageContent).embed] : [],
+                        flags: options.interactionOptions.ephemeral ? 64 : null
+                    });
+                } else {
+                    this.channel.createMessage({
+                        content: this.fillInString((options.messages.error as AdvancedMessageContent).content || options.messages.error as string),
+                        embed: embed ?? null
+                    });
+                }
 
                 resolve([]);
             }
