@@ -6,6 +6,12 @@ export interface BonusEntry {
     bonus(member?: Member): number | Promise<number>;
     cumulative?: boolean;
 }
+
+export interface InteractionOptions {
+    enabled?: boolean;
+    ephemeral?: boolean
+}
+
 export interface LastChanceOptions {
     enabled?: boolean;
     embedColor?: number;
@@ -87,6 +93,7 @@ export interface GiveawayRerollOptions {
         congrat?: string | AdvancedMessageContent;
         error?: string | AdvancedMessageContent;
     };
+    interactionOptions?: InteractionOptions;
 }
 
 export interface GiveawayData {
@@ -134,6 +141,11 @@ export const GiveawayMessages: GiveawaysMessages = {
     hostedBy: "Hosted by: {this.hostedBy}",
 };
 
+export const InteractionOptions: InteractionOptions = {
+    enabled: false,
+    ephemeral: false
+};
+
 export const LastChanceOptions: LastChanceOptions = {
     enabled: true,
     content: "⚠️ **LAST CHANCE TO ENTER** ⚠️",
@@ -173,10 +185,13 @@ export const GiveawayManagerOptions: GiveawaysManagerOptions = {
 export const GiveawayRerollOptions: GiveawayRerollOptions = {
     winnerCount: 1,
     messages: {
-        congrat:
-      "🎉 **New winner(s):** {winners}! Congratulations you won **{this.prize}**! \n {this.messageURL}",
+        congrat: "🎉 **New winner(s):** {winners}! Congratulations you won **{this.prize}**! \n {this.messageURL}",
         error: "No valid participations, no winners can be rerolled!",
     },
+    interactionOptions: {
+        enabled: false,
+        ephemeral: false
+    }
 };
 
 export const GiveawayData: GiveawayData = {
