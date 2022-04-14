@@ -134,7 +134,7 @@ export const GiveawayMessages: GiveawaysMessages = {
     drawing: "Drawing: **{duration}**",
     winMessage: "Congratulations, {winners}! You won **{this.prize}**! \n {this.messageURL}",
     dropMessage: "Be the first to react 🎉 !",
-    embedFooter: "Powered by the givies-framework",
+    embedFooter: "Powered by givies-framework",
     noWinner: "Giveaway cancelled, no valid participations.",
     winners: "Winner(s):",
     endedAt: "Ended at",
@@ -185,7 +185,7 @@ export const GiveawayManagerOptions: GiveawaysManagerOptions = {
 export const GiveawayRerollOptions: GiveawayRerollOptions = {
     winnerCount: 1,
     messages: {
-        congrat: "🎉 **New winner(s):** {winners}! Congratulations you won **{this.prize}**! \n {this.messageURL}",
+        congrat: "🎉 **New winner(s):** {winners}! Congratulations, you won **{this.prize}**! \n {this.messageURL}",
         error: "No valid participations, no winners can be rerolled!",
     },
     interactionOptions: {
