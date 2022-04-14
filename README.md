@@ -18,8 +18,6 @@ This framework includes amazing features such as:
     - RichEmbed Constructor
     - and more...
 
-This framework also supports both **JavaScript** and **TypeScript** languages.
-
 ## Developing a Discord bot using Givies-Framework
 
 - **Requirement:** You will need **[NodeJS v16.6.0+](https://nodejs.org)** installed.

@@ -3,6 +3,7 @@
 import {
     AdvancedMessageContent,
     Client,
+    CommandInteraction,
     GuildTextableChannel,
     Member,
     Message,
@@ -490,19 +491,28 @@ export class GiveawaysManager extends EventEmitter {
      * Rerolls a giveaway
      * @param messageID The ID of the giveawya message
      * @param options Optional reroll options
+     * @param interaction Optional Eris' command interaction
      * @returns {Promise<Array<Member>>}
      */
-    reroll(messageID: string, options: GiveawayRerollOptions = {}): Promise<Member[]> {
+    reroll(messageID: string, options: GiveawayRerollOptions = {}, interaction?: CommandInteraction): Promise<Member[]> {
         return new Promise(async (resolve, reject) => {
             const giveaway = this.giveaways.find((g) => g.messageID === messageID);
 
             if (!giveaway) return reject(`No Giveaway found with message ID ${messageID}`);
 
-            giveaway.reroll(options).then((winners) => {
-                this.emit("giveawayRerolled", giveaway, winners);
-                resolve(winners);
-            }).catch(reject);
+            if (options.interactionOptions.enabled) {
+                giveaway.reroll(options, interaction).then((winners) => {
+                    this.emit("giveawayRerolled", giveaway, winners);
+                    resolve(winners);
+                });
+            } else {
+                giveaway.reroll(options).then((winners) => {
+                    this.emit("giveawayRerolled", giveaway, winners);
+                    resolve(winners);
+                }).catch(reject);
+            }
         });
+
     }
 
     /**
