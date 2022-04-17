@@ -41,6 +41,7 @@ export interface GiveawayStartOptions {
     reaction?: any;
     messages?: GiveawaysMessages;
     thumbnail?: string;
+    image?: string;
     extraData?: any;
     lastChance?: LastChanceOptions;
     pauseOptions?: PauseOptions;
@@ -83,6 +84,7 @@ export interface GiveawayEditOptions {
     setEndTimestamp?: number;
     newMessages?: GiveawaysMessages;
     newThumbnail?: string;
+    newImage?: string;
     newBonusEntries?: BonusEntry[];
     newExtraData?: any;
     newLastChance?: LastChanceOptions;
@@ -115,6 +117,7 @@ export interface GiveawayData {
     embedColor?: number;
     embedColorEnd?: number;
     thumbnail?: string;
+    image?: string;
     hostedBy?: string;
     extraData?: any;
     lastChance?: LastChanceOptions;
