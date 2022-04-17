@@ -373,7 +373,8 @@ export class GiveawaysManager extends EventEmitter {
             .setColor(giveaway.embedColorEnd)
             .setFooter(strings.endedAt, (giveaway.messages.embedFooter as { text?: string; iconURL?: string }).iconURL)
             .setTimestamp(giveaway.endAt)
-            .setThumbnail(giveaway.thumbnail);
+            .setThumbnail(giveaway.thumbnail)
+            .setImage(giveaway.image);
     }
 
     /**
@@ -388,7 +389,8 @@ export class GiveawaysManager extends EventEmitter {
             .setFooter(giveaway.messages.endedAt, (giveaway.messages.embedFooter as { text?: string; iconURL?: string }).iconURL)
             .setDescription(giveaway.messages.noWinner + (giveaway.hostedBy ? "\n" + giveaway.messages.hostedBy : ""))
             .setTimestamp(giveaway.endAt)
-            .setThumbnail(giveaway.thumbnail);
+            .setThumbnail(giveaway.thumbnail)
+            .setImage(giveaway.image);
 
         return giveaway.fillInEmbed(embed);
     }
@@ -422,7 +424,8 @@ export class GiveawaysManager extends EventEmitter {
                     ) +
                     (giveaway.hostedBy ? "\n" + giveaway.messages.hostedBy : "")
             )
-            .setThumbnail(giveaway.thumbnail);
+            .setThumbnail(giveaway.thumbnail)
+            .setImage(giveaway.image);
 
         if (giveaway.endAt !== Infinity) {
             embed.setTimestamp(giveaway.endAt);
@@ -561,6 +564,7 @@ export class GiveawaysManager extends EventEmitter {
                         ? merge(GiveawayMessages, options.messages)
                         : GiveawayMessages,
                 thumbnail: typeof options.thumbnail === "string" ? options.thumbnail : undefined,
+                image: typeof options.image === "string" ? options.image : undefined,
                 reaction: Util.resolvePartialEmoji(options.reaction) ? options.reaction : undefined,
                 botsCanWin: typeof options.botsCanWin === "boolean" ? options.botsCanWin : undefined,
                 exemptPermissions: Array.isArray(options.exemptPermissions) ? options.exemptPermissions : undefined,
