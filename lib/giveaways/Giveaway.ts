@@ -78,6 +78,12 @@ export class Giveaway extends EventEmitter {
     hostedBy: string;
 
     /**
+     * The image of the giveaway
+     * @type {String}
+     */
+    image: string;
+
+    /**
      * The main giveaways manager
      * @type {GiveawaysManager}
      */
@@ -152,6 +158,7 @@ export class Giveaway extends EventEmitter {
         this.endTimeout = null;
         this.extraData = options.extraData;
         this.hostedBy = options.hostedBy;
+        this.image = options.image;
         this.guildID = options.guildID;
         this.manager = manager;
         this.message = null;
@@ -207,6 +214,7 @@ export class Giveaway extends EventEmitter {
             prize: this.prize,
             messages: this.messages,
             thumbnail: this.thumbnail,
+            image: this.image,
             hostedBy: this.hostedBy,
             embedColor: this.embedColor,
             embedColorEnd: this.embedColorEnd,
@@ -434,6 +442,10 @@ export class Giveaway extends EventEmitter {
 
             if (typeof options.newThumbnail === "string") {
                 this.thumbnail = options.newThumbnail;
+            }
+
+            if (typeof options.newImage === "string") {
+                this.thumbnail = options.newImage;
             }
 
             if (typeof options.newPrize === "string") {
