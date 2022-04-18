@@ -490,6 +490,19 @@ export class Giveaway extends EventEmitter {
                 );
             }
 
+            await this.manager.editGiveaway(this.messageID, this.data);
+
+            if (this.remainingTime <= 0) {
+                this.manager.end(this.messageID).catch(() => { });
+            } else {
+                const embed = this.manager.generateMainEmbed(this);
+
+                await this.message.edit({
+                    content: this.fillInString(this.messages.giveaway),
+                    embed: embed
+                }).catch(() => { });
+            }
+
             resolve(this);
         });
     }
