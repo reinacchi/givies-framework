@@ -323,12 +323,6 @@ export class RichEmbed {
      * @returns {RichEmbed}
      */
     setImage(imageURL: string): RichEmbed {
-        if (typeof imageURL !== "string")
-            throw new TypeError(
-                `Expected type 'string', received type ${typeof imageURL}`
-            );
-        if (!imageURL.startsWith("attachment://") && !URL_REGEX.test(imageURL))
-            throw new Error("Not a well formed URL");
         this.image = { url: imageURL };
         return this;
     }
