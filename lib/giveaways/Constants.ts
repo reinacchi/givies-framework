@@ -1,9 +1,10 @@
 "use strict";
 
 import { AdvancedMessageContent, Constants, Member } from "eris";
+import { Giveaway } from "./Giveaway";
 
 export interface BonusEntry {
-    bonus(member?: Member): number | Promise<number>;
+    bonus(member?: Member, giveaway?: Giveaway): number | Promise<number>;
     cumulative?: boolean;
 }
 
