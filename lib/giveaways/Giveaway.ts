@@ -361,7 +361,7 @@ export class Giveaway extends EventEmitter {
             for (const obj of this.bonusEntries) {
                 if (typeof obj.bonus === "function") {
                     try {
-                        const result = await obj.bonus.apply(this, [member]);
+                        const result = await obj.bonus.apply(this, [member, this]);
 
                         if (Number.isInteger(result) && result > 0) {
                             if (obj.cumulative) {
@@ -383,8 +383,9 @@ export class Giveaway extends EventEmitter {
 
         if (cumulativeEntries.length) {
             entries.push(cumulativeEntries.reduce((a, b) => a + b));
-            return Math.max(...entries);
         }
+
+        return Math.max(...entries);
     }
 
     /**
