@@ -446,7 +446,7 @@ export class Giveaway extends EventEmitter {
             }
 
             if (typeof options.newImage === "string") {
-                this.thumbnail = options.newImage;
+                this.image = options.newImage;
             }
 
             if (typeof options.newPrize === "string") {
