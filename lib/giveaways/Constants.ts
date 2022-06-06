@@ -39,7 +39,7 @@ export interface GiveawayStartOptions {
     bonusEntries?: BonusEntry[];
     embedColor?: number;
     embedColorEnd?: number;
-    reaction?: any;
+    reaction?: string;
     messages?: GiveawaysMessages;
     thumbnail?: string;
     image?: string;
@@ -73,7 +73,7 @@ export interface GiveawaysManagerOptions {
         exemptMembers?: (member: Member) => boolean | Promise<boolean>;
         embedColor?: number;
         embedColorEnd?: number;
-        reaction?: any;
+        reaction?: string;
         lastChance?: LastChanceOptions;
     };
 }
@@ -112,7 +112,7 @@ export interface GiveawayData {
     ended?: boolean;
     winnerIDs?: string[];
     messageID?: string;
-    reaction?: any;
+    reaction?: string;
     exemptPermissions?: [keyof Constants["Permissions"]];
     exemptMembers?: string;
     bonusEntries?: string;
