@@ -87,6 +87,7 @@ export interface GiveawayEditOptions {
     newThumbnail?: string;
     newImage?: string;
     newBonusEntries?: BonusEntry[];
+    newExemptMembers?: (member: Member) => boolean | Promise<boolean>;
     newExtraData?: any;
     newLastChance?: LastChanceOptions;
 }

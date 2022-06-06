@@ -480,6 +480,10 @@ export class Giveaway extends EventEmitter {
                 ) as any;
             }
 
+            if (typeof options.newExemptMembers === "function") {
+                this.options.exemptMembers = options.newExemptMembers as any;
+            }
+
             if (
                 options.newLastChance &&
                 typeof options.newLastChance === "object" &&
