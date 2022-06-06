@@ -751,7 +751,7 @@ export class Giveaway extends EventEmitter {
      */
     fillInString(text: string): string | null {
         if (typeof text !== "string") return null;
-        [...new Set(text.match(/\{[^{}]*(?:[^{}]*)*\}/g))]
+        [...new Set(text.match(/\{[^{}]{1,}\}/g))]
             .filter((match) => match?.slice(1, -1).trim() !== "")
             .forEach((match) => {
                 let replacer;
