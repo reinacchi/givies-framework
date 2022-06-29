@@ -47,7 +47,7 @@ const captcha = captchaImage.createCaptcha();
 const logger = new GiviesFramework.Utils.Logger();
 
 client.on("ready", () => {
-    logger.info("CLIENT READY", `${client.user.username} has connected!`);
+    logger.info({ message: `${client.user.username} is Ready`, subTitle: "Discord::Ready", title: "ERIS" });
 });
 
 client.on("messageCreate", async (message) => {

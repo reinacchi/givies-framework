@@ -24,9 +24,9 @@ export class Logger {
      * Logs an error logging message
      * @param options The logging options
      * @param options.message The message of the log
-     * @param options.type The type of the log
-     * @param options.title The title of the log
      * @param options.subTitle The sub title of the log. This comes after the title
+     * @param options.title The title of the log
+     * @param options.type The type of the log
      * @returns {void}
      */
     error(options: LoggingOptions): void {
@@ -37,9 +37,9 @@ export class Logger {
      * Logs an info logging message
      * @param options The logging options
      * @param options.message The message of the log
-     * @param options.type The type of the log
-     * @param options.title The title of the log
      * @param options.subTitle The sub title of the log. This comes after the title
+     * @param options.title The title of the log
+     * @param options.type The type of the log
      * @returns {void}
      */
     info(options: LoggingOptions): void {
@@ -51,9 +51,9 @@ export class Logger {
      * @param options The logging options
      * @param options.color The color of the log
      * @param options.message The message of the log
-     * @param options.type The type of the log
-     * @param options.title The title of the log
      * @param options.subTitle The sub title of the log. This comes after the title
+     * @param options.title The title of the log
+     * @param options.type The type of the log
      * @returns {void}
      */
     log(options: CustomLoggingOptions): void {
@@ -65,9 +65,9 @@ export class Logger {
      * @param options The logging options
      * @param options.color The color of the log
      * @param options.message The message of the log
-     * @param options.type The type of the log
-     * @param options.title The title of the log
      * @param options.subTitle The sub title of the log. This comes after the title
+     * @param options.title The title of the log
+     * @param options.type The type of the log
      * @returns {void}
      */
     success(options: LoggingOptions): void {
@@ -79,9 +79,9 @@ export class Logger {
      * @param options The logging options
      * @param options.color The color of the log
      * @param options.message The message of the log
-     * @param options.type The type of the log
-     * @param options.title The title of the log
      * @param options.subTitle The sub title of the log. This comes after the title
+     * @param options.title The title of the log
+     * @param options.type The type of the log
      * @returns {void}
      */
     system(options: LoggingOptions): void {
@@ -93,9 +93,9 @@ export class Logger {
      * @param options The logging options
      * @param options.color The color of the log
      * @param options.message The message of the log
-     * @param options.type The type of the log
-     * @param options.title The title of the log
      * @param options.subTitle The sub title of the log. This comes after the title
+     * @param options.title The title of the log
+     * @param options.type The type of the log
      * @returns {void}
      */
     warn(options: LoggingOptions): void {
