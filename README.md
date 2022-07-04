@@ -12,8 +12,6 @@ A framework to facilitate the development of Discord bots using [Eris](https://g
 This framework includes amazing features such as:
 
 - Giveaways
-- Image Manipulations
-   - Captcha
 - Utility Classes
     - Logger
     - RichEmbed Constructor
@@ -43,8 +41,6 @@ const client = new Eris.Client("Bot <BOT_TOKEN>", {
         "guildMessages"
     ]
 });
-const captchaImage = new GiviesFramework.Images.Captcha(175, 50, 5);
-const captcha = captchaImage.createCaptcha();
 const logger = new GiviesFramework.Utils.Logger();
 
 client.on("ready", () => {
@@ -61,10 +57,6 @@ client.on("messageCreate", async (message) => {
             .setColor(0x7289DA);
 
         return client.createMessage(message.channel.id, { embed: embed });
-    } else if (message.content === "!captcha") {
-        return client.createMessage(message.channel.id, {
-            content: `Captcha text: ${captcha.text}`
-        });
     }
 });
 
