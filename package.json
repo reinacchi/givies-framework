@@ -1,6 +1,6 @@
 {
   "name": "givies-framework",
-  "version": "2022.704.1",
+  "version": "2022.706.0",
   "description": "A framework to facilitate the development of Discord bots using Eris",
   "main": "src/index.js",
   "engines": {
@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@types/node": "^17.0.0",
-    "chalk": "^5.0.1",
+    "chalk": "^4.1.2",
     "deepmerge": "^4.2.2",
     "eris": "^0.17.1",
     "moment": "^2.29.1",
